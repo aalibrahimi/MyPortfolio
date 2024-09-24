@@ -4,6 +4,8 @@ gsap.registerPlugin(TextPlugin);
 // Initialize ScrollMagic
 var controller = new ScrollMagic.Controller();
 
+
+
 // Function to create typing animation for a section
 function createSectionScene(section) {
     var tl = gsap.timeline();
@@ -92,7 +94,7 @@ Full-Stack Developer | Problem Solver | Code Enthusiast`,
 3. RESTful API
 4. Machine Learning Model`,
         contact: () => `Contact Information:
-Email: ali@example.com
+Email: aalibrahimi@example.com
 LinkedIn: linkedin.com/in/alialibrahimi
 GitHub: github.com/alialibrahimi`,
         clear: () => {
@@ -122,6 +124,10 @@ GitHub: github.com/alialibrahimi`,
         }
     }
 };
+// Initialize the CLI
+document.addEventListener('DOMContentLoaded', () => {
+    cli.init();
+});
 
 // ASCII Art and Name Animation
 function animateIntro() {
@@ -167,12 +173,68 @@ function initSkillsTerminal() {
     }
 }
 
-// Log to console to verify script is running
-console.log('ScrollMagic script loaded and running');
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
 
-// Initialize the command-line interface (CLI) and animations
-document.addEventListener('DOMContentLoaded', () => {
-    cli.init();
-    initSkillsTerminal();
-    animateIntro();
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.ok) {
+                formStatus.textContent = 'Message sent successfully!';
+                form.reset();
+            } else {
+                formStatus.textContent = 'Failed to send message. Please try again.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            formStatus.textContent = 'An error occurred. Please try again later.';
+        });
+    });
 });
+// // Log to console to verify script is running
+// console.log('ScrollMagic script loaded and running');
+
+// // Initialize the command-line interface (CLI) and animations
+// document.addEventListener('DOMContentLoaded', () => {
+//     cli.init();
+//     initSkillsTerminal();
+//     animateIntro();
+// });
+// document.addEventListener('DOMContentLoaded', () => {
+//     const cursor = document.getElementById('retro-cursor');
+//     const trailCount = 5;
+//     const trailElements = [];
+
+//     // Create trail elements
+//     for (let i = 0; i < trailCount; i++) {
+//         const trail = document.createElement('div');
+//         trail.className = 'cursor-trail';
+//         document.body.appendChild(trail);
+//         trailElements.push(trail);
+//     }
+
+//     // Update cursor and trail positions
+//     document.addEventListener('mousemove', (e) => {
+//         cursor.style.left = e.clientX - 6 + 'px';
+//         cursor.style.top = e.clientY - 6 + 'px';
+
+//         // Update trail positions with delay
+//         trailElements.forEach((trail, index) => {
+//             setTimeout(() => {
+//                 trail.style.left = e.clientX - 2 + 'px';
+//                 trail.style.top = e.clientY - 2 + 'px';
+//             }, index * 50);
+//         });
+//     });
+// });

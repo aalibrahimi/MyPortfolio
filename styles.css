@@ -329,7 +329,29 @@ h2 {
 }
 
 /* Firefox scrollbar customization */
-* {
+/* * {
     scrollbar-width: thin;
     scrollbar-color: #00ff00 #001100;
 }
+
+Custom cursor
+#retro-cursor {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #00ff00;
+    background-color: #000000;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+Cursor trail effect
+.cursor-trail {
+    width: 4px;
+    height: 4px;
+    background-color: #00ff00;
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 9998;
+} */

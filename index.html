@@ -129,12 +129,13 @@ __        __   _       ____
 
         <section id="contact" class="typing-section">
             <h2>> Contact_Me</h2>
-            <form id="contact-form">
+            <form id="contact-form" action="https://formspree.io/f/xyzgqvdd" method="POST"> 
                 <input type="text" name="name" placeholder="Your_Name" required>
                 <input type="email" name="email" placeholder="Your_Email" required>
                 <textarea name="message" placeholder="Your_Message" required></textarea>
                 <button type="submit">> Send_Message</button>
             </form>
+            <div id="form-status"></div>
         </section>
 
         <!-- CLI Section -->
@@ -156,6 +157,7 @@ __        __   _       ____
      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/TextPlugin.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js"></script>
+     <div id="retro-cursor"></div>
      <script src="full.js"></script>
 </body>
 </html>
