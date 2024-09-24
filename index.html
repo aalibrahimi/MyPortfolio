@@ -11,59 +11,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js"></script>
 </head>
 <body>
-    <style>
-        #cli {
-            background-color: #000;
-            color: #0f0;
-            padding: 20px;
-            font-family: 'Courier New', monospace;
-            border: 1px solid #0f0;
-            margin-bottom: 30px;
-        }
-        #cli-output {
-            min-height: 200px;
-            margin-bottom: 10px;
-            white-space: pre-wrap;
-        }
-        #cli-input-line {
-            display: flex;
-            align-items: center;
-        }
-        #cli-input {
-            flex-grow: 1;
-            background-color: transparent;
-            border: none;
-            color: #0f0;
-            font-family: inherit;
-            font-size: inherit;
-            outline: none;
-        }
-        .prompt {
-            margin-right: 5px;
-        }
-    </style>
-    <header>
-        <pre>
+    <div id="boot-sequence" class="fullscreen">
+        <pre id="boot-text"></pre>
+    </div>
+    
+    <div id="main-content" style="visibility: hidden; opacity: 0;">
+        <header>
+            <pre>
 __        __   _       ____                            
 \ \      / /__| |__   |  _ \  ___ __    __
  \ \ /\ / / _ \ '_ \  | | | |/ _ \\ \ / / 
   \ V  V /  __/ |_) | | |_| |  __/ \ V / 
    \_/\_/ \___|_.__/  |____/ \___|  \_/ 
-            
-        </pre>
-        <h1>Ali Alibrahimi<span class="cursor"></span></h1>
-        <nav>
-            <ul>
-                <li><a href="#home">> Home_</a></li>
-                <li><a href="#projects">> Projects_</a></li>
-                <li><a href="#skills">> Skills_</a></li>
-                <li><a href="#resume">> Resume_</a></li>
-                <li><a href="#contact">> Contact_</a></li>
-            </ul>
-        </nav>
-    </header>
+            </pre>
+            <h1>Ali Alibrahimi<span class="cursor"></span></h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">> Home_</a></li>
+                    <li><a href="#projects">> Projects_</a></li>
+                    <li><a href="#skills">> Skills_</a></li>
+                    <li><a href="#resume">> Resume_</a></li>
+                    <li><a href="#contact">> Contact_</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <main>
         <section id="home" class="typing-section">
             <h2>> Welcome_</h2>
             <p class="typing-text">Full-Stack Developer | Problem Solver | Code Enthusiast</p>
@@ -107,6 +79,7 @@ __        __   _       ____
                 </ul>
             </div>
         </section>
+        <div id="skills-container"></div>
 
         <section id="projects" class="reveal-section">
             <h2>> Projects</h2>
@@ -146,18 +119,13 @@ __        __   _       ____
                 <input type="text" id="cli-input">
             </div>
         </div>
-    </main>
 
-    <footer>
-        <p>&copy; 2024 Ali Alibrahimi. All rights reserved. | END OF LINE</p>
-    </footer>
+        <footer>
+            <p>&copy; 2024 Ali Alibrahimi. All rights reserved. | END OF LINE</p>
+        </footer>
+    </div>
 
-     <!-- Load scripts in this order -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/TextPlugin.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js"></script>
-     <div id="retro-cursor"></div>
-     <script src="full.js"></script>
+    <div id="retro-cursor"></div>
+    <script src="full.js"></script>
 </body>
 </html>

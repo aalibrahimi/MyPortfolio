@@ -4,64 +4,100 @@ gsap.registerPlugin(TextPlugin);
 // Initialize ScrollMagic
 var controller = new ScrollMagic.Controller();
 
+const bootText = [
+    "BIOS Version 1.0.2424",
+    "Copyright (C) 2024, Ali Alibrahimi",
+    "CPU: AliTech 686 at 66 MHz",
+    "Memory Test: 640K OK",
+    "Hard Disk: 80 MB",
+    "Loading portfolio.sys...",
+    "Welcome to Ali's Portfolio OS"
+];
 
+function typeWriter(text, i, fnCallback) {
+    if (i < text.length) {
+        document.getElementById("boot-text").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(function() {
+            typeWriter(text, i, fnCallback)
+        }, 25);
+    } else if (typeof fnCallback == 'function') {
+        setTimeout(fnCallback, 700);
+    }
+}
 
-// Function to create typing animation for a section
+function startBootSequence(i) {
+    if (i < bootText.length) {
+        typeWriter(bootText[i] + "\n", 0, function() {
+            setTimeout(() => startBootSequence(i + 1), 300);
+        });
+    } else {
+        console.log('Boot sequence completed');
+        setTimeout(function() {
+            const bootSequence = document.getElementById("boot-sequence");
+            bootSequence.style.opacity = '0';
+            bootSequence.style.transition = 'opacity 1s ease-out';
+            setTimeout(() => {
+                bootSequence.style.display = 'none';
+                document.body.classList.add("loaded");
+                revealMainContent();
+            }, 1000);
+        }, 1000);
+    }
+}
+
+function revealMainContent() {
+    console.log('Revealing main content started');
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+        console.log('Main content found');
+        mainContent.style.visibility = 'visible';
+        mainContent.style.opacity = '1';
+    } else {
+        console.error('Main content not found');
+    }
+
+    initScrollMagic();
+    cli.init();
+    createSkillBars();
+}
+
 function createSectionScene(section) {
     var tl = gsap.timeline();
     
-    // Reveal the section
     tl.to(section, {duration: 0.3, opacity: 1, y: 0});
     
-    // Type out each typing-text element in the section
     section.querySelectorAll('.typing-text').forEach(function(element) {
         var originalText = element.textContent.trim();
         if (originalText.length > 0) {
-            // Store the original text as a data attribute
             element.setAttribute('data-original-text', originalText);
-            // Clear the text content
             element.textContent = '';
-            // Add faster typing animation to the timeline
             tl.to(element, {
-                duration: 0.8, // Reduced from 2 to 0.8
+                duration: 0.8,
                 text: originalText, 
                 ease: "none"
-            }, "-=0.3"); // Reduced from -=0.5 to -=0.3 for quicker succession
+            }, "-=0.3");
         }
     });
 
-    // Create a new ScrollMagic scene for this section
     new ScrollMagic.Scene({
         triggerElement: section,
         triggerHook: 0.8,
-        reverse: false  // Play once, no reverse
+        reverse: false
     })
     .setTween(tl)
     .addTo(controller);
 }
 
-// Wait for DOM to load and then initialize animations
-document.addEventListener('DOMContentLoaded', function() {
+function initScrollMagic() {
+    document.body.style.visibility = 'visible';
+    document.body.style.opacity = '1';
     var sections = document.querySelectorAll('section');
-
     sections.forEach(function(section) {
-        // Set initial state of sections (hidden with y-offset)
-        gsap.set(section, {opacity: 0, y: 30}); // Reduced y-offset for quicker reveal
-        
-        // Create the ScrollMagic and GSAP scene for each section
+        gsap.set(section, {opacity: 0, y: 30});
         createSectionScene(section);
     });
-
-    console.log('Fast ScrollMagic animations initialized');
-});
-
-// Log to console to verify script is running
-console.log('ScrollMagic script loaded and running');
-
-
-// Log to console to verify script is running
-console.log('ScrollMagic script loaded and running');
-
+}
 
 // Command-line Interface
 const cli = {
@@ -124,117 +160,70 @@ GitHub: github.com/alialibrahimi`,
         }
     }
 };
-// Initialize the CLI
-document.addEventListener('DOMContentLoaded', () => {
-    cli.init();
-});
 
-// ASCII Art and Name Animation
-function animateIntro() {
-    const asciiArt = document.getElementById('ascii-art');
-    const name = document.getElementById('name');
-
-    if (asciiArt && name) {
-        const tl = gsap.timeline();
-        tl.add(createTypingAnimation(asciiArt, 3))
-          .add(createTypingAnimation(name), "-=0.5");
-    }
+function createSkillBars() {
+    const skills = [
+      { name: 'JavaScript', level: 90 },
+      { name: 'React', level: 85 },
+      { name: 'Node.js', level: 80 },
+      { name: 'Python', level: 75 },
+      { name: 'SQL', level: 70 },
+      { name: 'Git', level: 85 }
+    ];
+  
+    const skillsContainer = document.getElementById('skills-container');
+    
+    skills.forEach(skill => {
+      const skillBar = document.createElement('div');
+      skillBar.className = 'skill-bar';
+      skillBar.innerHTML = `
+        <div class="skill-name">${skill.name}</div>
+        <div class="skill-level" style="width: 0%"></div>
+      `;
+      skillsContainer.appendChild(skillBar);
+  
+      setTimeout(() => {
+        skillBar.querySelector('.skill-level').style.width = `${skill.level}%`;
+      }, 100);
+    });
 }
 
-// Skills Terminal Effect
-function initSkillsTerminal() {
-    const skillTerminal = document.getElementById('skill-terminal');
-    const skillList = document.getElementById('skill-list');
-
-    if (skillTerminal && skillList) {
-        skillTerminal.addEventListener('click', () => {
-            if (skillList.style.display === 'none' || skillList.style.display === '') {
-                skillList.style.display = 'block';
-                gsap.from(skillList.children, {
-                    opacity: 0,
-                    y: 20,
-                    stagger: 0.1,
-                    duration: 0.5,
-                    ease: "power2.out"
-                });
-            } else {
-                gsap.to(skillList.children, {
-                    opacity: 0,
-                    y: -20,
-                    stagger: 0.05,
-                    duration: 0.3,
-                    ease: "power2.in",
-                    onComplete: () => {
-                        skillList.style.display = 'none';
-                    }
-                });
-            }
-        });
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
+function initializePortfolio() {
     const form = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(result => {
-            if (result.ok) {
-                formStatus.textContent = 'Message sent successfully!';
-                form.reset();
-            } else {
-                formStatus.textContent = 'Failed to send message. Please try again.';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            formStatus.textContent = 'An error occurred. Please try again later.';
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.ok) {
+                    formStatus.textContent = 'Message sent successfully!';
+                    form.reset();
+                } else {
+                    formStatus.textContent = 'Failed to send message. Please try again.';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                formStatus.textContent = 'An error occurred. Please try again later.';
+            });
         });
-    });
+    }
+}
+
+// Single DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+    startBootSequence(0);
+    initializePortfolio();
 });
-// // Log to console to verify script is running
-// console.log('ScrollMagic script loaded and running');
 
-// // Initialize the command-line interface (CLI) and animations
-// document.addEventListener('DOMContentLoaded', () => {
-//     cli.init();
-//     initSkillsTerminal();
-//     animateIntro();
-// });
-// document.addEventListener('DOMContentLoaded', () => {
-//     const cursor = document.getElementById('retro-cursor');
-//     const trailCount = 5;
-//     const trailElements = [];
-
-//     // Create trail elements
-//     for (let i = 0; i < trailCount; i++) {
-//         const trail = document.createElement('div');
-//         trail.className = 'cursor-trail';
-//         document.body.appendChild(trail);
-//         trailElements.push(trail);
-//     }
-
-//     // Update cursor and trail positions
-//     document.addEventListener('mousemove', (e) => {
-//         cursor.style.left = e.clientX - 6 + 'px';
-//         cursor.style.top = e.clientY - 6 + 'px';
-
-//         // Update trail positions with delay
-//         trailElements.forEach((trail, index) => {
-//             setTimeout(() => {
-//                 trail.style.left = e.clientX - 2 + 'px';
-//                 trail.style.top = e.clientY - 2 + 'px';
-//             }, index * 50);
-//         });
-//     });
-// });
+console.log('ScrollMagic script loaded and running');

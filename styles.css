@@ -13,12 +13,51 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s ease-in;
 }
+
+body, main, section, header, footer, div {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+body.loaded main,
+body.loaded section {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+#boot-sequence {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#boot-text {
+    font-size: 16px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Remove any CSS that might be hiding your content */
 
 /* Header styles */
 header {
     background-color: #001100;
-    color: #00ff00;
     padding: 1rem 0;
     border-bottom: 2px solid #00ff00;
 }
@@ -46,15 +85,30 @@ nav ul li a:hover {
 main {
     flex: 1;
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s ease-in;
 }
 
 section {
-    margin-bottom: 3rem;
+    margin-bottom: 50vh;
     border: 1px solid #00ff00;
     padding: 1rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+section:last-child {
+    margin-bottom: 0;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -94,18 +148,17 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid #00ff00;
 }
 
+/* Contact styles */
 #contact {
     background-color: #000000;
     border: 1px solid #00ff00;
     padding: 30px 20px;
     max-width: 760px;
-    margin: 0 auto;
+    margin: 0 auto 200px;
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
-    margin-bottom: 200px;
 }
 
 #contact h2 {
-    color: #00ff00;
     margin-bottom: 25px;
     font-size: 1.5em;
     text-align: left;
@@ -135,7 +188,8 @@ h1, h2, h3, h4, h5, h6 {
     min-height: 120px;
 }
 
-#contact-form button {
+#contact-form button,
+button {
     background-color: #001100;
     color: #00ff00;
     border: 1px solid #00ff00;
@@ -148,32 +202,18 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1em;
 }
 
-#contact-form button:hover {
+button {
+    padding: 0.8rem 1rem;
+    margin-bottom: 50px;
+}
+
+#contact-form button:hover,
+button:hover {
     background-color: #002200;
 }
 
 #contact-form button:active {
     transform: scale(0.98);
-}
-
-/* Add space below the form */
-#contact::after {
-    content: '';
-    display: block;
-    height: 30px;
-}
-button {
-    background-color: #001100;
-    color: #00ff00;
-    padding: 0.8rem 1rem;
-    border: 1px solid #00ff00;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-bottom: 50px;
-}
-
-button:hover {
-    background-color: #002200;
 }
 
 /* Footer styles */
@@ -188,9 +228,8 @@ footer {
 
 /* Retro terminal effect */
 @keyframes blink {
-    0% { opacity: 0; }
+    0%, 100% { opacity: 0; }
     50% { opacity: 1; }
-    100% { opacity: 0; }
 }
 
 .cursor {
@@ -201,79 +240,12 @@ footer {
     animation: blink 1s step-end infinite;
 }
 
-/* Media query for responsiveness */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    nav ul li {
-        margin: 0.5rem 0;
-    }
-}
-/* Typing effect styles */
 .typing-text::after {
     content: '|';
     animation: blink 0.7s infinite;
 }
 
-@keyframes blink {
-    0% { opacity: 0; }
-    50% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-/* Ensure the page is scrollable */
-body {
-    min-height: 100vh;
-    overflow-y: auto; /* Ensure vertical scrolling is enabled */
-}
-
-/* Adjust section styling */
-section {
-    margin-bottom: 50vh; /* Adjust as needed */
-    opacity: 0; /* Start visible */
-    transform: scale(1.2); 
-    transform: none; /* Remove initial transform */
-    /* transition: opacity 0.5s, transform 0.5s; */
-    transition: opacity 0.5s, transform 0.5s;
-}
-
-/* Remove bottom margin from the last section */
-section:last-child {
-    margin-bottom: 0;
-}
-
-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.5s, transform 0.3s;
-}
-
-
-/* Additional styles for better readability */
-main {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-h2 {
-    margin-bottom: 20px;
-}
-
-.project {
-    margin-bottom: 30px;
-}
-
-#dev {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-/* Ensure CLI is visible */
+/* CLI styles */
 #cli {
     background-color: #001100;
     color: #00ff00;
@@ -302,56 +274,137 @@ h2 {
     font-size: inherit;
     outline: none;
 }
-/* scroll baaar retrooo */
-/* Custom scroll bar for WebKit browsers (Chrome, Safari, etc.) */
+
+/* Boot sequence styles */
+#boot-sequence {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#boot-text {
+    font-size: 16px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Skill bars */
+#skills-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.skill-bar {
+    margin-bottom: 10px;
+    background: #000;
+    border: 1px solid #0f0;
+    padding: 5px;
+}
+
+.skill-name {
+    color: #0f0;
+    margin-bottom: 5px;
+}
+
+.skill-level {
+    height: 20px;
+    background: #0f0;
+    width: 0;
+    transition: width 1s ease-in-out;
+}
+
+/* CRT effect */
+body::before,
+body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+}
+
+body::before {
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    z-index: 2;
+}
+
+body::after {
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.27861; }
+    5% { opacity: 0.34769; }
+    10% { opacity: 0.23604; }
+    15% { opacity: 0.90626; }
+    20% { opacity: 0.18128; }
+    25% { opacity: 0.83891; }
+    30% { opacity: 0.65583; }
+    35% { opacity: 0.67807; }
+    40% { opacity: 0.26559; }
+    45% { opacity: 0.84693; }
+    50% { opacity: 0.96019; }
+    55% { opacity: 0.08594; }
+    60% { opacity: 0.20313; }
+    65% { opacity: 0.71988; }
+    70% { opacity: 0.53455; }
+    75% { opacity: 0.37288; }
+    80% { opacity: 0.71428; }
+    85% { opacity: 0.70419; }
+    90% { opacity: 0.7003; }
+    95% { opacity: 0.36108; }
+    100% { opacity: 0.24387; }
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
     width: 16px;
-    background-color: #001100;  /* Dark background for retro feel */
+    background-color: #001100;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #00ff00;  /* Neon green thumb */
-    border: 3px solid #001100;  /* Give it some padding for a blocky look */
-    border-radius: 0;  /* Keep it square for retro style */
-    box-shadow: inset 0 0 10px #00ff00;  /* Green glow effect */
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background-color: #00ff00;  /* Keep thumb color */
-    box-shadow: 0 0 15px #00ff00;  /* Intensify glow on hover */
-}
-
-/* Scrollbar track */
-::-webkit-scrollbar-track {
-    background-color: #000;  /* Ensure background is consistent with the page */
-    box-shadow: inset 0 0 10px #001100;  /* Subtle retro glow effect */
-}
-
-/* Firefox scrollbar customization */
-/* * {
-    scrollbar-width: thin;
-    scrollbar-color: #00ff00 #001100;
-}
-
-Custom cursor
-#retro-cursor {
-    width: 12px;
-    height: 12px;
-    border: 2px solid #00ff00;
-    background-color: #000000;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-}
-
-Cursor trail effect
-.cursor-trail {
-    width: 4px;
-    height: 4px;
     background-color: #00ff00;
-    position: fixed;
-    pointer-events: none;
-    opacity: 0.5;
-    z-index: 9998;
-} */
+    border: 3px solid #001100;
+    border-radius: 0;
+    box-shadow: inset 0 0 10px #00ff00;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    box-shadow: 0 0 15px #00ff00;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #000;
+    box-shadow: inset 0 0 10px #001100;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 0.5rem 0;
+    }
+}
