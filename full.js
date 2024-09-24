@@ -1,6 +1,65 @@
-// Initialize ScrollMagic and GSAP
-const controller = new ScrollMagic.Controller();
+// Register the TextPlugin for GSAP
 gsap.registerPlugin(TextPlugin);
+
+// Initialize ScrollMagic
+var controller = new ScrollMagic.Controller();
+
+// Function to create typing animation for a section
+function createSectionScene(section) {
+    var tl = gsap.timeline();
+    
+    // Reveal the section
+    tl.to(section, {duration: 0.3, opacity: 1, y: 0});
+    
+    // Type out each typing-text element in the section
+    section.querySelectorAll('.typing-text').forEach(function(element) {
+        var originalText = element.textContent.trim();
+        if (originalText.length > 0) {
+            // Store the original text as a data attribute
+            element.setAttribute('data-original-text', originalText);
+            // Clear the text content
+            element.textContent = '';
+            // Add faster typing animation to the timeline
+            tl.to(element, {
+                duration: 0.8, // Reduced from 2 to 0.8
+                text: originalText, 
+                ease: "none"
+            }, "-=0.3"); // Reduced from -=0.5 to -=0.3 for quicker succession
+        }
+    });
+
+    // Create a new ScrollMagic scene for this section
+    new ScrollMagic.Scene({
+        triggerElement: section,
+        triggerHook: 0.8,
+        reverse: false  // Play once, no reverse
+    })
+    .setTween(tl)
+    .addTo(controller);
+}
+
+// Wait for DOM to load and then initialize animations
+document.addEventListener('DOMContentLoaded', function() {
+    var sections = document.querySelectorAll('section');
+
+    sections.forEach(function(section) {
+        // Set initial state of sections (hidden with y-offset)
+        gsap.set(section, {opacity: 0, y: 30}); // Reduced y-offset for quicker reveal
+        
+        // Create the ScrollMagic and GSAP scene for each section
+        createSectionScene(section);
+    });
+
+    console.log('Fast ScrollMagic animations initialized');
+});
+
+// Log to console to verify script is running
+console.log('ScrollMagic script loaded and running');
+
+
+// Log to console to verify script is running
+console.log('ScrollMagic script loaded and running');
+
 
 // Command-line Interface
 const cli = {
@@ -48,53 +107,21 @@ GitHub: github.com/alialibrahimi`,
             : `Command not found: ${command}. Type 'help' for available commands.`;
     },
     init() {
-        this.input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const command = this.input.value;
-                this.output.innerHTML += `\n> ${command}\n${this.execute(command)}\n`;
-                this.input.value = '';
-                this.output.scrollTop = this.output.scrollHeight;
-            }
-        });
-        this.output.innerHTML = 'Welcome to Ali Alibrahimi\'s portfolio. Type \'help\' for available commands.\n';
+        if (this.input) {
+            this.input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const command = this.input.value;
+                    this.output.innerHTML += `\n> ${command}\n${this.execute(command)}\n`;
+                    this.input.value = '';
+                    this.output.scrollTop = this.output.scrollHeight;
+                }
+            });
+            this.output.innerHTML = 'Welcome to Ali Alibrahimi\'s portfolio. Type \'help\' for available commands.\n';
+        } else {
+            console.error('CLI input element not found');
+        }
     }
 };
-
-// Animation Functions
-function createTypingAnimation(element, duration = 2) {
-    return gsap.to(element, {
-        duration: duration,
-        text: element.textContent,
-        ease: "none"
-    });
-}
-
-function revealSection(section) {
-    const tl = gsap.timeline();
-    tl.to(section, {duration: 0.5, opacity: 1, y: 0});
-    section.querySelectorAll('.typing-text').forEach(element => {
-        tl.add(createTypingAnimation(element), "-=0.5");
-    });
-    return tl;
-}
-
-// Initialize Animations and ScrollMagic Scenes
-function initAnimations() {
-    document.querySelectorAll('section').forEach(section => {
-        gsap.set(section, {opacity: 0, y: 50});
-        section.querySelectorAll('.typing-text').forEach(element => {
-            gsap.set(element, {text: ""});
-        });
-
-        new ScrollMagic.Scene({
-            triggerElement: section,
-            triggerHook: 0.8,
-            reverse: false
-        })
-        .setTween(revealSection(section))
-        .addTo(controller);
-    });
-}
 
 // ASCII Art and Name Animation
 function animateIntro() {
@@ -140,39 +167,12 @@ function initSkillsTerminal() {
     }
 }
 
-// Check if element is in viewport
-function isInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
+// Log to console to verify script is running
+console.log('ScrollMagic script loaded and running');
 
-// Reveal sections as they come into view
-function revealSectionsOnScroll() {
-    document.querySelectorAll('section').forEach(section => {
-        if (isInViewport(section)) {
-            section.style.opacity = '1';
-            section.style.transform = 'translateY(0)';
-        }
-    });
-}
-
-// Main Initialization
+// Initialize the command-line interface (CLI) and animations
 document.addEventListener('DOMContentLoaded', () => {
     cli.init();
-    initAnimations();
     initSkillsTerminal();
     animateIntro();
-
-    // Add scroll event listener
-    window.addEventListener('scroll', revealSectionsOnScroll);
-
-    // Initial check for visible sections
-    revealSectionsOnScroll();
 });
-
-console.log('Portfolio script loaded and running');
