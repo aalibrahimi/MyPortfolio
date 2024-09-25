@@ -23,7 +23,9 @@ body, main, section, header, footer, div {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+    
 }
+
 
 body.loaded main,
 body.loaded section {
@@ -93,13 +95,15 @@ main {
     transition: opacity 1s ease-in;
 }
 
+
 section {
-    margin-bottom: 50vh;
+    margin-bottom: 10rem;
     border: 1px solid #00ff00;
     padding: 1rem;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    max-width: 750px; /* Reduce the maximum width */
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 section:last-child {
@@ -130,6 +134,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    
 }
 
 #skills li {
@@ -252,17 +257,30 @@ footer {
     padding: 20px;
     border: 1px solid #00ff00;
     margin-bottom: 30px;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    position: relative; /* Add this to allow absolute positioning of children */
+    height: 500px; /* Set a fixed height or adjust as needed */
 }
 
 #cli-output {
-    min-height: 200px;
+    height: calc(100% - 40px); /* Adjust based on your padding and desired space for input */
     margin-bottom: 10px;
     white-space: pre-wrap;
+    overflow-y: auto;
+    font-size: 0.9em;
+    padding-bottom: 30px; /* Add space for the input line */
 }
 
 #cli-input-line {
     display: flex;
     align-items: center;
+    position: absolute;
+    left: 20px; /* Match left padding of #cli */
+    bottom: 10px; /* Adjust as needed */
+    width: calc(100% - 40px); /* Full width minus left and right padding */
 }
 
 #cli-input {
@@ -271,8 +289,15 @@ footer {
     border: none;
     color: #00ff00;
     font-family: inherit;
-    font-size: inherit;
+    font-size: 0.9em;
     outline: none;
+}
+
+/* Add a prompt before the input */
+#cli-input-line::before {
+    content: '> ';
+    color: #00ff00;
+    margin-right: 5px;
 }
 
 /* Boot sequence styles */
@@ -302,8 +327,9 @@ footer {
 /* Skill bars */
 #skills-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 750px;
     margin: 20px auto;
+    margin: 200px auto;
 }
 
 .skill-bar {
