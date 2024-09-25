@@ -14,18 +14,23 @@ const bootText = [
     "Welcome to Ali's Portfolio OS"
 ];
 
+let isSkipped = false;
+const typingSpeed = 25;
+
 function createLoadingBar() {
     const loadingBarContainer = document.createElement('div');
     loadingBarContainer.id = 'loading-bar-container';
     loadingBarContainer.style.cssText = `
         position: absolute;
-        bottom: 200px;
-        left: 42.5%;
+        bottom: 50px;
+        left: 50%;
         transform: translateX(-50%);
         width: 300px;
         text-align: center;
         font-family: 'Courier New', monospace;
         color: #00ff00;
+         top: 70%;
+         left: 43%;
     `;
 
     const loadingText = document.createElement('div');
@@ -39,6 +44,7 @@ function createLoadingBar() {
         background-color: #111;
         border: 1px solid #00ff00;
         height: 20px;
+        left: -4%;
         position: relative;
     `;
 
@@ -55,37 +61,63 @@ function createLoadingBar() {
     progressText.id = 'progress-text';
     progressText.style.cssText = `
         position: absolute;
-        left: 100%;
-        top: -10%;
-        margin-left: 10px;
+        left: 320px;
+        bottom: -25%;
         transform: translateY(-50%);
         color: #00ff00;
+    `;
+
+    const skipText = document.createElement('div');
+    skipText.id = 'skip-text';
+    skipText.textContent = 'Press any key to skip';
+    skipText.style.cssText = `
+        margin-top: 10px;
+        font-size: 0.8em;
+        color: #888;
     `;
 
     progressContainer.appendChild(loadingBar);
     progressContainer.appendChild(progressText);
     loadingBarContainer.appendChild(loadingText);
     loadingBarContainer.appendChild(progressContainer);
-    document.getElementById('boot-sequence').appendChild(loadingBarContainer);
+    loadingBarContainer.appendChild(skipText);
+
+    const bootSequence = document.getElementById('boot-sequence');
+    if (bootSequence) {
+        bootSequence.appendChild(loadingBarContainer);
+    } else {
+        console.error('Boot sequence container not found');
+    }
 }
 
 
 function updateLoadingBar(progress) {
     const loadingBar = document.getElementById('loading-bar');
     const progressText = document.getElementById('progress-text');
-    loadingBar.style.width = `${progress}%`;
-    progressText.textContent = `${Math.round(progress)}`;
+    if (loadingBar && progressText) {
+        loadingBar.style.width = `${progress}%`;
+        progressText.textContent = `${Math.round(progress)}`;
+    }
 }
 
-
 function typeWriter(text, i, fnCallback) {
+    const bootText = document.getElementById("boot-text");
+    if (!bootText) {
+        console.error('Boot text container not found');
+        return;
+    }
+    if (isSkipped) {
+        bootText.innerHTML += text;
+        if (typeof fnCallback === 'function') {
+            fnCallback();
+        }
+        return;
+    }
     if (i < text.length) {
-        document.getElementById("boot-text").innerHTML += text.charAt(i);
+        bootText.innerHTML += text.charAt(i);
         i++;
-        setTimeout(function() {
-            typeWriter(text, i, fnCallback)
-        }, 25);
-    } else if (typeof fnCallback == 'function') {
+        setTimeout(() => typeWriter(text, i, fnCallback), 25);
+    } else if (typeof fnCallback === 'function') {
         setTimeout(fnCallback, 700);
     }
 }
@@ -94,25 +126,38 @@ function startBootSequence(i) {
     if (i === 0) {
         createLoadingBar();
     }
-    if (i < bootText.length) {
-        typeWriter(bootText[i] + "\n", 0, function() {
+    if (i < bootText.length && !isSkipped) {
+        typeWriter(bootText[i] + "\n", 0, () => {
             updateLoadingBar((i + 1) / bootText.length * 100);
             setTimeout(() => startBootSequence(i + 1), 300);
         });
     } else {
-        console.log('Boot sequence completed');
-        setTimeout(function() {
-            const bootSequence = document.getElementById("boot-sequence");
-            bootSequence.style.opacity = '0';
-            bootSequence.style.transition = 'opacity 1s ease-out';
-            setTimeout(() => {
-                bootSequence.style.display = 'none';
-                document.body.classList.add("loaded");
-                revealMainContent();
-            }, 1000);
-        }, 1000);
+        completeBootSequence();
     }
 }
+
+function completeBootSequence() {
+    console.log('Boot sequence completed');
+    updateLoadingBar(100);
+    setTimeout(function() {
+        const bootSequence = document.getElementById("boot-sequence");
+        bootSequence.style.opacity = '0';
+        bootSequence.style.transition = 'opacity 1s ease-out';
+        setTimeout(() => {
+            bootSequence.style.display = 'none';
+            document.body.classList.add("loaded");
+            revealMainContent();
+        }, 1000);
+    }, 1000);
+}
+function skipBootSequence() {
+    if (!isSkipped) {
+        isSkipped = true;
+        document.getElementById("boot-text").innerHTML = bootText.join("\n");
+        completeBootSequence();
+    }
+}
+
 
 function revealMainContent() {
     console.log('Revealing main content started');
@@ -292,6 +337,8 @@ function initializePortfolio() {
 document.addEventListener('DOMContentLoaded', function() {
     startBootSequence(0);
     initializePortfolio();
+    // Add event listener for key press to skip
+    document.addEventListener('keydown', skipBootSequence);
 });
 
 console.log('ScrollMagic script loaded and running');
