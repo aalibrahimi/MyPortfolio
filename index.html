@@ -5,127 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ali Alibrahimi - Retro Dev Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/TextPlugin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js"></script>
 </head>
 <body>
-    <div id="boot-sequence" class="fullscreen">
+    <div id="boot-sequence">
         <pre id="boot-text"></pre>
     </div>
     
-    <div id="main-content" style="visibility: hidden; opacity: 0;">
+    <div id="main-content">
         <header>
-            <pre>
-__        __   _       ____                            
-\ \      / /__| |__   |  _ \  ___ __    __
- \ \ /\ / / _ \ '_ \  | | | |/ _ \\ \ / / 
-  \ V  V /  __/ |_) | | |_| |  __/ \ V / 
-   \_/\_/ \___|_.__/  |____/ \___|  \_/ 
-            </pre>
-            <h1>Ali Alibrahimi<span class="cursor"></span></h1>
+            <h1>Ali Alibrahimi</h1>
             <nav>
                 <ul>
                     <li><a href="#home">> Home_</a></li>
                     <li><a href="#projects">> Projects_</a></li>
                     <li><a href="#skills">> Skills_</a></li>
-                    <li><a href="#resume">> Resume_</a></li>
                     <li><a href="#contact">> Contact_</a></li>
                 </ul>
             </nav>
         </header>
 
-        <section id="home" class="typing-section">
-            <h2>> Welcome_</h2>
-            <p class="typing-text">Full-Stack Developer | Problem Solver | Code Enthusiast</p>
-        </section>
+        <main>
+            <section id="home">
+                <h2>> Welcome_</h2>
+                <p class="typing-text">Full-Stack Developer | Problem Solver | Code Enthusiast</p>
+            </section>
 
-        <section id="projects" class="typing-section">
-            <h2>> Projects_</h2>
-            <div class="project">
-                <h3 class="typing-text">> E-commerce Platform</h3>
-                <p class="typing-text">Category: Full-Stack</p>
-            </div>
-            <div class="project">
-                <h3 class="typing-text">> Data Visualization Dashboard</h3>
-                <p class="typing-text">Category: Frontend</p>
-            </div>
-            <div class="project">
-                <h3 class="typing-text">> RESTful API</h3>
-                <p class="typing-text">Category: Backend</p>
-            </div>
-            <div class="project">
-                <h3 class="typing-text">> Machine Learning Model</h3>
-                <p class="typing-text">Category: Python</p>
-            </div>
-        </section>
-
-        <section id="skills" class="reveal-section">
-            <h2>> Skills</h2>
-            <div id="skill-terminal" class="terminal">
-                <p>> List_Skills</p>
-                <ul id="skill-list">
-                    <li class="typing-text">JavaScript: Expert</li>
-                    <li class="typing-text">Python: Proficient</li>
-                    <li class="typing-text">React: Advanced</li>
-                    <li class="typing-text">Node.js: Advanced</li>
-                    <li class="typing-text">CSS/SASS: Expert</li>
-                    <li class="typing-text">HTML5: Expert</li>
-                    <li class="typing-text">SQL: Proficient</li>
-                    <li class="typing-text">Git: Advanced</li>
-                    <li class="typing-text">WebGL: Intermediate</li>
-                    <li class="typing-text">Three.js: Intermediate</li>
-                </ul>
-            </div>
-        </section>
-        <div id="skills-container"></div>
-
-        <section id="projects" class="reveal-section">
-            <h2>> Projects</h2>
-            <div class="project">
-                <h3 class="typing-text">> Interactive Data Visualization</h3>
-                <p class="typing-text">A real-time data visualization tool using D3.js and WebSockets.</p>
-                <a href="#" class="project-link">> View_Project</a>
-            </div>
-            <div class="project">
-                <h3 class="typing-text">> AI-Powered Chat Application</h3>
-                <p class="typing-text">A full-stack chat app with AI integration using MERN stack and OpenAI API.</p>
-                <a href="#" class="project-link">> View_Project</a>
-            </div>
-            <div class="project">
-                <h3 class="typing-text">> 3D Portfolio Showcase</h3>
-                <p class="typing-text">An immersive 3D portfolio built with Three.js and React.</p>
-                <a href="#" class="project-link">> View_Project</a>
-            </div>
-        </section>
-
-        <section id="contact" class="typing-section">
-            <h2>> Contact_Me</h2>
-            <form id="contact-form" action="https://formspree.io/f/xyzgqvdd" method="POST"> 
-                <input type="text" name="name" placeholder="Your_Name" required>
-                <input type="email" name="email" placeholder="Your_Email" required>
-                <textarea name="message" placeholder="Your_Message" required></textarea>
-                <button type="submit">> Send_Message</button>
-            </form>
-            <div id="form-status"></div>
-        </section>
-
-        <!-- CLI Section -->
-        <div id="cli">
-            <div id="cli-output"></div>
-            <div id="cli-input-line">
-                <span class="prompt">></span>
-                <input type="text" id="cli-input">
-            </div>
-        </div>
+            <!-- Add other sections (projects, skills, contact) here -->
+        </main>
 
         <footer>
             <p>&copy; 2024 Ali Alibrahimi. All rights reserved. | END OF LINE</p>
         </footer>
     </div>
 
-    <div id="retro-cursor"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/TextPlugin.min.js"></script>
     <script src="full.js"></script>
 </body>
 </html>
