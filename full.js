@@ -18,6 +18,29 @@ let isSkipped = false;
 const typingSpeed = 25;
 
 function createLoadingBar() {
+    const style = document.createElement('style');
+    style.textContent = `
+        #loading-bar-container {
+            --bottom-position: -37%;
+        }
+        @media (max-width: 1024px) {
+            #loading-bar-container {
+                --bottom-position: -30%;
+            }
+        }
+        @media (max-width: 768px) {
+            #loading-bar-container {
+                --bottom-position: -70%;
+            }
+        }
+        @media (max-width: 480px) {
+            #loading-bar-container {
+                --bottom-position: -80%;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
     const loadingBarContainer = document.createElement('div');
     loadingBarContainer.id = 'loading-bar-container';
     loadingBarContainer.style.cssText = `
@@ -25,7 +48,7 @@ function createLoadingBar() {
         top: 0;
         left: 0;
         right: 0;
-        bottom: -37%; 
+        bottom: var(--bottom-position);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -62,7 +85,7 @@ function createLoadingBar() {
     progressText.style.cssText = `
         position: absolute;
         right: -40px;
-        bottom: -37%; 
+        top: 50%;
         transform: translateY(-50%);
         color: #00ff00;
     `;
