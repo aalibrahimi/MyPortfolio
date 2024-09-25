@@ -22,29 +22,29 @@ function createLoadingBar() {
     loadingBarContainer.id = 'loading-bar-container';
     loadingBarContainer.style.cssText = `
         position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 300px;
-        text-align: center;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: -37%; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         font-family: 'Courier New', monospace;
         color: #00ff00;
-         top: 70%;
-         left: 43%;
     `;
 
     const loadingText = document.createElement('div');
     loadingText.id = 'loading-text';
     loadingText.textContent = 'Loading...';
-    loadingText.style.marginBottom = '5px';
+    loadingText.style.marginBottom = '10px';
 
     const progressContainer = document.createElement('div');
     progressContainer.style.cssText = `
-        width: 100%;
+        width: 300px;
         background-color: #111;
         border: 1px solid #00ff00;
         height: 20px;
-        left: -4%;
         position: relative;
     `;
 
@@ -61,8 +61,8 @@ function createLoadingBar() {
     progressText.id = 'progress-text';
     progressText.style.cssText = `
         position: absolute;
-        left: 320px;
-        bottom: -25%;
+        right: -40px;
+        bottom: -37%; 
         transform: translateY(-50%);
         color: #00ff00;
     `;
@@ -89,7 +89,6 @@ function createLoadingBar() {
         console.error('Boot sequence container not found');
     }
 }
-
 
 function updateLoadingBar(progress) {
     const loadingBar = document.getElementById('loading-bar');
