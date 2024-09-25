@@ -273,76 +273,159 @@ function initScrollMagic() {
     });
 }
 
-// Command-line Interface
 const cli = {
-    output: document.getElementById('cli-output'),
-    input: document.getElementById('cli-input'),
+    output: null,
+    input: null,
     commands: {
         help: () => `Available commands:
-  help - Show this help message
-  about - About Ali Alibrahimi
-  skills - List skills
-  projects - List projects
-  contact - Show contact information
-  clear - Clear the console`,
+  help       - Show this help message
+  about      - About Ali Alibrahimi
+  skills     - List skills
+  projects   - List projects
+  experience - Show work experience
+  education  - Show educational background
+  contact    - Show contact information
+  social     - Show social media links
+  achievements - List of notable achievements
+  resume     - Get link to download resume
+  clear      - Clear the console`,
         about: () => `Ali Alibrahimi
-Full-Stack Developer | Problem Solver | Code Enthusiast`,
-        skills: () => `Skills:
-- JavaScript: Expert
-- Python: Proficient
-- React: Advanced
-- Node.js: Advanced
-- CSS/SASS: Expert
-- HTML5: Expert
-- SQL: Proficient
-- Git: Advanced
-- WebGL: Intermediate
-- Three.js: Intermediate`,
-        projects: () => `Projects:
-1. E-commerce Platform
-2. Data Visualization Dashboard
-3. RESTful API
-4. Machine Learning Model`,
+Trilingual full-stack developer and coding instructor with expertise in React, Node.js, and advanced programming concepts. Passionate about creating innovative tech solutions and inspiring young learners.`,
+        skills: () => `Relevant Skills:
+• Programming Languages: Java, Python, C#, HTML, CSS, JavaScript/TypeScript, SQL
+• Frameworks/Tools: React.js, Next.js, Node.js, Flask, .NET, Git, Docker, CUDA
+• Cloud Platforms: AWS, Google Cloud Platform (GCP)
+• Operating Systems: Linux, Windows
+• Databases: MySQL, NoSQL
+• Languages: Arabic, English, Spanish`,
+        projects: () => `Relevant Projects:
+1. E-commerce Website (React, Node.js, Stripe)
+   - Developed a full-stack e-commerce platform with user authentication, product catalog, and secure payment processing
+   - Implemented responsive design, resulting in a 30% increase in mobile user engagement
+   - Optimized front-end performance using React Suspense and Code Splitting, achieving a 40% reduction in load time
+
+2. Weather Forecast Application
+   - Built a web application using Python and Flask to fetch and display real-time weather data using an API`,
+        experience: () => `Work Experience:
+1. Code With Us, Campbell, CA (March 2023 - Present)
+   Coding Instructor
+   - Developed microservices using Node.js for progress tracking and personalized learning paths
+   - Architected and implemented an advanced game development curriculum
+   - Implemented complex coding concepts in age-appropriate projects
+
+2. The Coder School, Los Gatos, CA (February 2022 - Present)
+   Coding Tutor
+   - Designed and delivered a comprehensive full-stack development boot camp
+   - Implemented an innovative peer code review system
+
+3. IMAC, Santa Clara, CA (June 2022 - August 2022)
+   IT Tech Support
+   - Engineered and deployed a containerized imaging solution
+   - Developed Python scripts to automate troubleshooting
+   - Created a custom monitoring solution using ELK stack`,
+        education: () => `Education:
+• Grand Canyon University, Phoenix, AZ
+  Bachelor of Science in Computer Science (Expected June 2025)
+  GPA: 3.8/4.0
+
+• Mission College, Santa Clara, CA
+  Associate of Arts in Computer Information Systems (CIS) (May 2022)
+  GPA: 3.7/4.0
+
+Certifications: Google Cyber Security, Google IT Tech, Google Python`,
         contact: () => `Contact Information:
-Email: aalibrahimi@example.com
-LinkedIn: linkedin.com/in/alialibrahimi
-GitHub: github.com/alialibrahimi`,
-        clear: () => {
-            cli.output.innerHTML = '';
-            return '';
-        }
-    },
-    execute(command) {
-        const cmd = command.toLowerCase().trim();
-        return this.commands.hasOwnProperty(cmd) 
-            ? this.commands[cmd]() 
-            : `Command not found: ${command}. Type 'help' for available commands.`;
-    },
-    init() {
-        if (this.input) {
-            this.input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    const command = this.input.value;
-                    this.output.innerHTML += `\n> ${command}\n${this.execute(command)}\n`;
-                    this.input.value = '';
-                    this.output.scrollTop = this.output.scrollHeight;
-                }
-            });
-            this.output.innerHTML = 'Welcome to Ali Alibrahimi\'s portfolio. Type \'help\' for available commands.\n';
-        } else {
-            console.error('CLI input element not found');
-        }
+• Location: San Jose, CA
+• Phone: (408) 690-4009
+• Email: aalibrahimi@gmail.com`,
+        social: () => `Social Media:
+• LinkedIn: linkedin.com/in/aalibrahimi
+• GitHub: github.com/aalibrahimi`,
+
+
+        achievements: () => `Achievements:
+• Improved student performance by an average of 30% through customized learning plans
+• Maintained a 98% customer satisfaction rate in IT support role
+• Reduced system downtime by 35% through custom monitoring solutions`,
+resume: function() {
+    const resumeUrl = "https://docs.google.com/document/d/1z58CKgNj1d5XQ9NxkSaK15_fdPCzx8ev/edit?usp=sharing&ouid=114775191607140993368&rtpof=true&sd=true";
+    
+    this.output.innerHTML += "Would you like to open my resume? (y/n)\n";
+    this.isWaitingForResumeResponse = true;
+    
+    return ''; // Return empty string as the output is already handled
+},
+
+clear: () => {
+    cli.output.innerHTML = '';
+    return '';
+}
+},
+execute(command) {
+if (this.isWaitingForResumeResponse) {
+    this.handleResumeResponse(command);
+    return '';
+}
+
+const cmd = command.toLowerCase().trim();
+if (cmd === '') {
+    return ''; // Return empty string for empty commands
+}
+if (this.commands.hasOwnProperty(cmd)) {
+    return this.commands[cmd].call(this);
+} else {
+    return `Command not found: '${command}'. Type 'help' for available commands.`;
+}
+},
+handleResumeResponse(response) {
+const resumeUrl = "https://docs.google.com/document/d/1z58CKgNj1d5XQ9NxkSaK15_fdPCzx8ev/edit?usp=sharing&ouid=114775191607140993368&rtpof=true&sd=true";
+
+if (response.toLowerCase() === 'y') {
+    window.open(resumeUrl, '_blank');
+    this.output.innerHTML += "Opening resume in a new tab.\n";
+} else if (response.toLowerCase() === 'n') {
+    this.output.innerHTML += "Resume not opened. You can always use the 'resume' command again to view it.\n";
+} else {
+    this.output.innerHTML += "";
+    return; // Keep waiting for a valid response
+}
+
+this.isWaitingForResumeResponse = false;
+},
+mainInputHandler: function(e) {
+if (e.key === 'Enter') {
+    const command = this.input.value;
+    this.output.innerHTML += `\n> ${command}\n`;
+    const result = this.execute(command);
+    if (result !== '') {
+        this.output.innerHTML += `${result}\n`;
     }
+    this.input.value = '';
+    this.output.scrollTop = this.output.scrollHeight;
+}
+},
+init() {
+this.output = document.getElementById('cli-output');
+this.input = document.getElementById('cli-input');
+
+if (this.input && this.output) {
+    this.mainInputHandler = this.mainInputHandler.bind(this);
+    this.input.addEventListener('keydown', this.mainInputHandler);
+    this.output.innerHTML = 'Welcome to Ali Alibrahimi\'s portfolio. Type \'help\' for available commands.\n';
+} else {
+    console.error('CLI input or output element not found');
+}
+}
 };
+
 
 function createSkillBars() {
     const skills = [
         { name: 'JavaScript', level: 90 },
         { name: 'React', level: 85 },
         { name: 'Node.js', level: 80 },
-        { name: 'Python', level: 75 },
+        { name: 'Python', level: 85 },
         { name: 'SQL', level: 70 },
-        { name: 'Git', level: 85 }
+        { name: 'Git', level: 75 }
     ];
 
     const skillsContainer = document.getElementById('skills-container');
@@ -430,6 +513,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializePortfolio();
     // Add event listener for key press to skip
     document.addEventListener('keydown', skipBootSequence);
+    // Initialize the CLI when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', () => cli.init());
 });
 
 console.log('ScrollMagic script loaded and running');
