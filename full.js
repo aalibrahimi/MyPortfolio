@@ -14,6 +14,70 @@ const bootText = [
     "Welcome to Ali's Portfolio OS"
 ];
 
+function createLoadingBar() {
+    const loadingBarContainer = document.createElement('div');
+    loadingBarContainer.id = 'loading-bar-container';
+    loadingBarContainer.style.cssText = `
+        position: absolute;
+        bottom: 200px;
+        left: 42.5%;
+        transform: translateX(-50%);
+        width: 300px;
+        text-align: center;
+        font-family: 'Courier New', monospace;
+        color: #00ff00;
+    `;
+
+    const loadingText = document.createElement('div');
+    loadingText.id = 'loading-text';
+    loadingText.textContent = 'Loading...';
+    loadingText.style.marginBottom = '5px';
+
+    const progressContainer = document.createElement('div');
+    progressContainer.style.cssText = `
+        width: 100%;
+        background-color: #111;
+        border: 1px solid #00ff00;
+        height: 20px;
+        position: relative;
+    `;
+
+    const loadingBar = document.createElement('div');
+    loadingBar.id = 'loading-bar';
+    loadingBar.style.cssText = `
+        width: 0%;
+        height: 100%;
+        background-color: #00ff00;
+        transition: width 0.5s ease-out;
+    `;
+
+    const progressText = document.createElement('div');
+    progressText.id = 'progress-text';
+    progressText.style.cssText = `
+        position: absolute;
+        left: 100%;
+        top: -10%;
+        margin-left: 10px;
+        transform: translateY(-50%);
+        color: #00ff00;
+    `;
+
+    progressContainer.appendChild(loadingBar);
+    progressContainer.appendChild(progressText);
+    loadingBarContainer.appendChild(loadingText);
+    loadingBarContainer.appendChild(progressContainer);
+    document.getElementById('boot-sequence').appendChild(loadingBarContainer);
+}
+
+
+function updateLoadingBar(progress) {
+    const loadingBar = document.getElementById('loading-bar');
+    const progressText = document.getElementById('progress-text');
+    loadingBar.style.width = `${progress}%`;
+    progressText.textContent = `${Math.round(progress)}`;
+}
+
+
 function typeWriter(text, i, fnCallback) {
     if (i < text.length) {
         document.getElementById("boot-text").innerHTML += text.charAt(i);
@@ -27,8 +91,12 @@ function typeWriter(text, i, fnCallback) {
 }
 
 function startBootSequence(i) {
+    if (i === 0) {
+        createLoadingBar();
+    }
     if (i < bootText.length) {
         typeWriter(bootText[i] + "\n", 0, function() {
+            updateLoadingBar((i + 1) / bootText.length * 100);
             setTimeout(() => startBootSequence(i + 1), 300);
         });
     } else {
