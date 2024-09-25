@@ -4,6 +4,32 @@ gsap.registerPlugin(TextPlugin);
 // Initialize ScrollMagic
 var controller = new ScrollMagic.Controller();
 
+function disableScroll(){
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+    //styles to prevent scrolling
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollTop}px`;
+    document.body.style.left = `-${scrollLeft}px`;
+}
+
+function enableScroll(){
+    //noww we remove the style preventing the scrolling
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+
+    //get the scroll position from the bodys top position
+    const scrollY = document.body.style.top;
+    document.body.style.top = '';
+    document.body.style.left= '';
+
+    //scroll to where the user waas  before the disabling scroll
+    window.scrollTo(0, parseInt(scrollY || '0') *  -1)
+
+}
+
 const bootText = [
     "BIOS Version 1.0.2424",
     "Copyright (C) 2024, Ali Alibrahimi",
@@ -147,6 +173,7 @@ function typeWriter(text, i, fnCallback) {
 function startBootSequence(i) {
     if (i === 0) {
         createLoadingBar();
+        disableScroll();
     }
     if (i < bootText.length && !isSkipped) {
         typeWriter(bootText[i] + "\n", 0, () => {
@@ -168,7 +195,9 @@ function completeBootSequence() {
         setTimeout(() => {
             bootSequence.style.display = 'none';
             document.body.classList.add("loaded");
+            enableScroll(); // Enable scrolling after the boot sequence is complete
             revealMainContent();
+            
         }, 1000);
     }, 1000);
 }
@@ -177,6 +206,7 @@ function skipBootSequence() {
         isSkipped = true;
         document.getElementById("boot-text").innerHTML = bootText.join("\n");
         completeBootSequence();
+        enableScroll(); // Enable scrolling after the boot sequence is complete
     }
 }
 
@@ -188,13 +218,21 @@ function revealMainContent() {
         console.log('Main content found');
         mainContent.style.visibility = 'visible';
         mainContent.style.opacity = '1';
+
+        // Delay the initializtion of scroll magic
+       // Delay the initialization of ScrollMagic
+       setTimeout(() => {
+        initScrollMagic();
+        createSkillBars();
+    }, 100); // Small delay to ensure DOM is ready
+    
     } else {
         console.error('Main content not found');
     }
 
-    initScrollMagic();
+    
     cli.init();
-    createSkillBars();
+    
 }
 
 function createSectionScene(section) {
@@ -225,6 +263,7 @@ function createSectionScene(section) {
 }
 
 function initScrollMagic() {
+    console.log('Initializing ScrollMagic');
     document.body.style.visibility = 'visible';
     document.body.style.opacity = '1';
     var sections = document.querySelectorAll('section');
@@ -357,6 +396,7 @@ function initializePortfolio() {
 
 // Single DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
+    disableScroll();
     startBootSequence(0);
     initializePortfolio();
     // Add event listener for key press to skip
