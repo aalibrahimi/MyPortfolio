@@ -333,22 +333,33 @@ footer {
 }
 
 .skill-bar {
-    margin-bottom: 10px;
-    background: #000;
-    border: 1px solid #0f0;
-    padding: 5px;
+    margin-bottom: 20px;
 }
 
 .skill-name {
-    color: #0f0;
     margin-bottom: 5px;
+    color: #00ff00;
+}
+
+.skill-bar-container {
+    position: relative;
+    background-color: #111;
+    border: 1px solid #00ff00;
+    height: 20px;
 }
 
 .skill-level {
-    height: 20px;
-    background: #0f0;
-    width: 0;
-    transition: width 1s ease-in-out;
+    height: 100%;
+    background-color: #00ff00;
+    transition: width 1s ease-out;
+}
+
+.skill-percentage {
+    position: absolute;
+    right: -40px;
+    top: -15%;
+    transform: translateY(-50%);
+    color: #00ff00;
 }
 
 /* CRT effect */

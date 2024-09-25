@@ -337,30 +337,59 @@ GitHub: github.com/alialibrahimi`,
 
 function createSkillBars() {
     const skills = [
-      { name: 'JavaScript', level: 90 },
-      { name: 'React', level: 85 },
-      { name: 'Node.js', level: 80 },
-      { name: 'Python', level: 75 },
-      { name: 'SQL', level: 70 },
-      { name: 'Git', level: 85 }
+        { name: 'JavaScript', level: 90 },
+        { name: 'React', level: 85 },
+        { name: 'Node.js', level: 80 },
+        { name: 'Python', level: 75 },
+        { name: 'SQL', level: 70 },
+        { name: 'Git', level: 85 }
     ];
-  
+
     const skillsContainer = document.getElementById('skills-container');
-    
+
     skills.forEach(skill => {
-      const skillBar = document.createElement('div');
-      skillBar.className = 'skill-bar';
-      skillBar.innerHTML = `
-        <div class="skill-name">${skill.name}</div>
-        <div class="skill-level" style="width: 0%"></div>
-      `;
-      skillsContainer.appendChild(skillBar);
-  
-      setTimeout(() => {
-        skillBar.querySelector('.skill-level').style.width = `${skill.level}%`;
-      }, 100);
+        const skillBar = document.createElement('div');
+        skillBar.className = 'skill-bar';
+        skillBar.innerHTML = `
+            <div class="skill-name">${skill.name}</div>
+            <div class="skill-bar-container">
+                <div class="skill-level" data-level="${skill.level}" style="width: 0%"></div>
+                <div class="skill-percentage">0%</div>
+            </div>
+        `;
+        skillsContainer.appendChild(skillBar);
     });
+
+    // Create a ScrollMagic scene for the skills section
+    new ScrollMagic.Scene({
+        triggerElement: "#skills-container",
+        triggerHook: 0.8,
+        reverse: false
+    })
+    .on('enter', function() {
+        // Animate all skill bars and percentages when the section enters the viewport
+        document.querySelectorAll('.skill-bar-container').forEach(container => {
+            const skillLevel = container.querySelector('.skill-level');
+            const skillPercentage = container.querySelector('.skill-percentage');
+            const level = skillLevel.getAttribute('data-level');
+            
+            gsap.to(skillLevel, {
+                width: `${level}%`,
+                duration: 1,
+                ease: "power2.out"
+            });
+
+            gsap.to(skillPercentage, {
+                innerHTML: `${level}%`,
+                duration: 1,
+                roundProps: "innerHTML",
+                ease: "power2.out"
+            });
+        });
+    })
+    .addTo(controller);
 }
+
 
 function initializePortfolio() {
     const form = document.getElementById('contact-form');
