@@ -257,7 +257,7 @@ footer {
     padding: 20px;
     border: 1px solid #00ff00;
     margin-bottom: 30px;
-    max-width: 750px;
+    max-width: 950px;
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
@@ -270,7 +270,7 @@ footer {
     margin-bottom: 10px;
     white-space: pre-wrap;
     overflow-y: auto;
-    font-size: 0.9em;
+    font-size: 1.2em;
     padding-bottom: 30px; /* Add space for the input line */
 }
 

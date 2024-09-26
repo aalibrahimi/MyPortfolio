@@ -4,6 +4,8 @@ gsap.registerPlugin(TextPlugin);
 // Initialize ScrollMagic
 var controller = new ScrollMagic.Controller();
 
+
+
 function disableScroll(){
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
@@ -508,13 +510,13 @@ function initializePortfolio() {
 
 // Single DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOMContentLoaded event fired');
     disableScroll();
     startBootSequence(0);
     initializePortfolio();
-    // Add event listener for key press to skip
     document.addEventListener('keydown', skipBootSequence);
-    // Initialize the CLI when the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', () => cli.init());
+    cli.init();
+   
 });
 
 console.log('ScrollMagic script loaded and running');
