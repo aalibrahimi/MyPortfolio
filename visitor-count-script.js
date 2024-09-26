@@ -16,37 +16,62 @@ import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/fireb
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+function generateDeviceId() {
+    let deviceId = localStorage.getItem('deviceId');
+    if (!deviceId) {
+        deviceId = 'device_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('deviceId', deviceId);
+    }
+    return deviceId;
+}
+
 export async function initializeVisitorCount() {
     console.log('Initializing visitor count');
 
-    // Get the visitor count element
+    const deviceId = generateDeviceId();
+    const isNewVisit = sessionStorage.getItem('visited') !== 'true';
+    sessionStorage.setItem('visited', 'true');
+
     const visitorCountElement = document.getElementById('visitor-count');
 
-    if (visitorCountElement) {
-        try {
-            // Fetch visitor count from Firestore
-            const visitorDoc = doc(db, 'siteData', 'visitorCount');
-            const docSnap = await getDoc(visitorDoc);
+    try {
+        const visitorDoc = doc(db, 'siteData', 'visitorCount');
+        const docSnap = await getDoc(visitorDoc);
 
-            if (docSnap.exists()) {
-                let count = docSnap.data().count;
+        if (docSnap.exists()) {
+            let data = docSnap.data();
+            let count = data.count || 0;
+            let devices = data.devices || {};
+
+            if (!devices[deviceId] && isNewVisit) {
                 count++;
-
-                // Update Firestore with the new visitor count
-                await setDoc(visitorDoc, { count: count });
-
-                // Update the visitor count on the page
-                visitorCountElement.textContent = count.toLocaleString();
+                devices[deviceId] = true;
+                await setDoc(visitorDoc, { count: count, devices: devices });
+                console.log(`New visit! Count incremented to: ${count}`);
             } else {
-                console.error("No visitor count found in Firestore!");
-                // Initialize the count if it doesn't exist
-                await setDoc(visitorDoc, { count: 1 });
+                console.log(`Returning visit. Current count: ${count}`);
+            }
+
+            if (visitorCountElement) {
+                visitorCountElement.textContent = count.toLocaleString();
+            }
+
+            console.log(`Your device ID: ${deviceId}`);
+            console.log(`Total visits: ${count}`);
+        } else {
+            await setDoc(visitorDoc, { count: 1, devices: { [deviceId]: true } });
+            console.log('Visitor count initialized to 1');
+            if (visitorCountElement) {
                 visitorCountElement.textContent = '1';
             }
-        } catch (error) {
-            console.error("Error fetching or updating visitor count: ", error);
         }
-    } else {
-        console.error("Visitor count element not found!");
+    } catch (error) {
+        console.error("Error updating visitor count: ", error);
+        if (visitorCountElement) {
+            visitorCountElement.textContent = 'Error';
+        }
     }
 }
+
+// Call the function when the script loads
+initializeVisitorCount();
