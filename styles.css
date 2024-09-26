@@ -252,52 +252,85 @@ footer {
 
 /* CLI styles */
 #cli {
-    background-color: #001100;
-    color: #00ff00;
+    background-color: #000000;
+    color: #ffffff;
     padding: 20px;
-    border: 1px solid #00ff00;
+    border: 1px solid #333333;
     margin-bottom: 30px;
     max-width: 950px;
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
-    position: relative; /* Add this to allow absolute positioning of children */
-    height: 500px; /* Set a fixed height or adjust as needed */
+    position: relative;
+    height: 500px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 #cli-output {
-    height: calc(100% - 40px); /* Adjust based on your padding and desired space for input */
+    height: calc(100% - 40px);
     margin-bottom: 10px;
     white-space: pre-wrap;
     overflow-y: auto;
-    font-size: 1.2em;
-    padding-bottom: 30px; /* Add space for the input line */
+    font-size: 14px;
+    padding-bottom: 30px;
 }
 
 #cli-input-line {
     display: flex;
     align-items: center;
     position: absolute;
-    left: 20px; /* Match left padding of #cli */
-    bottom: 10px; /* Adjust as needed */
-    width: calc(100% - 40px); /* Full width minus left and right padding */
+    left: 20px;
+    bottom: 10px;
+    width: calc(100% - 40px);
 }
 
 #cli-input {
     flex-grow: 1;
     background-color: transparent;
     border: none;
-    color: #00ff00;
+    color: #ffffff;
     font-family: inherit;
-    font-size: 0.9em;
+    font-size: 14px;
     outline: none;
 }
 
 /* Add a prompt before the input */
 #cli-input-line::before {
-    content: '> ';
+    content: '$ ';
     color: #00ff00;
     margin-right: 5px;
+}
+
+/* Syntax highlighting for CLI output */
+.cli-keyword { color: #ff7b00; }
+.cli-string { color: #ffd700; }
+.cli-number { color: #00ffff; }
+.cli-comment { color: #808080; }
+.cli-variable { color: #ff69b4; }
+.cli-function { color: #00ff00; }
+.cli-error { color: #ff0000; }
+.cli-success { color: #00ff00; }
+
+/* Custom scrollbar for CLI */
+#cli::-webkit-scrollbar {
+    width: 10px;
+    background-color: #1a1a1a;
+}
+
+#cli::-webkit-scrollbar-thumb {
+    background-color: #333333;
+    border: 2px solid #1a1a1a;
+    border-radius: 10px;
+}
+
+#cli::-webkit-scrollbar-thumb:hover {
+    background-color: #444444;
+}
+
+#cli::-webkit-scrollbar-track {
+    background-color: #1a1a1a;
+    border-radius: 10px;
 }
 
 /* Boot sequence styles */
