@@ -122,6 +122,21 @@ __        __   _       ____
         <!-- <div id="visitor-count-container" style="position: fixed; bottom: 20px; right: 20px; background-color: #000; color: #00ff00; padding: 10px; font-family: 'Courier New', monospace; font-size: 14px; border: 2px solid #00ff00; box-shadow: 0 0 10px #00ff00; z-index: 9999;">
             <span id="visitor-count">Loading...</span> visitors
         </div> -->
+        <div id="visitor-count-container" style="
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            background-color: #000; 
+            color: #00ff00; 
+            padding: 10px; 
+            font-family: 'Courier New', monospace; 
+            font-size: 14px; 
+            border: 2px solid #00ff00; 
+            box-shadow: 0 0 10px #00ff00; 
+            z-index: 9999;">
+            <span id="visitor-count">Loading...</span> visitors
+        </div>
+
         <footer>
             <p>&copy; 2024 Ali Alibrahimi. All rights reserved. | END OF LINE</p>
         </footer>
@@ -129,6 +144,14 @@ __        __   _       ____
 
     <div id="retro-cursor"></div>
     <script src="full.js"></script>
+ 
+
+    <script type="module">
+        import { initializeVisitorCount } from './visitor-count-script.js';
+        document.addEventListener('DOMContentLoaded', initializeVisitorCount);
+    </script>
+     <!-- Your custom JS file -->
+    <!-- <script src="visitor.js"></script> -->
     <!-- <script src="pacman.js"></script> -->
 
 </body>
