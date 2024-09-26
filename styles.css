@@ -305,7 +305,7 @@ footer {
 /* Syntax highlighting for CLI output */
 .cli-keyword { color: #ff7b00; }
 .cli-string { color: #ffd700; }
-.cli-number { color: #00ffff; }
+.cli-number { color:var(--color); }
 .cli-comment { color: #808080; }
 .cli-variable { color: #ff69b4; }
 .cli-function { color: #00ff00; }
@@ -480,3 +480,119 @@ body::after {
 }
 
 /* Typing  */
+
+/* Using cyan as an example accent color */
+
+:root{
+    --color: #bba8fc;
+}
+body {
+    /* Keep your existing styles */
+    /* Add a subtle gradient background */
+    background: linear-gradient(to bottom, #000000, #001111);
+}
+
+header {
+    /* Keep existing styles */
+    border-bottom: 2px solid var(--color);
+}
+
+h1, h2, h3 {
+    color: #00FFFF;
+    text-shadow: 0 0 5px var(--color);
+}
+
+nav ul li a:not(#cli a) {
+    color: var(--color);
+}
+
+nav ul li a:not(#cli a):hover {
+    text-decoration: underline;
+    text-shadow: 0 0 5px var(--color);
+}
+
+.project {
+    /* Keep existing styles */
+    border: 1px solid #00FF00;
+    transition: border-color 0.3s ease;
+}
+
+.project:hover {
+    border-color: var(--color);
+}
+
+#skills ul li {
+    /* Keep existing styles */
+    border: 1px solid #00FF00;
+}
+
+#skills ul li:hover {
+    border-color: var(--color);
+    color: var(--color);
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+    border-color: var(--color);
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+#contact-form button {
+    /* Keep existing styles */
+    border-color: var(--color);
+}
+
+#contact-form button:hover {
+    background-color: var(--color);
+    color: #000000;
+}
+
+footer {
+    /* Keep existing styles */
+    border-top: 2px solid var(--color);
+}
+/* Headings */
+h1, h2, h3 {
+    color: var(--color);
+    text-shadow: 0 0 5px var(--color); /* Subtle glow effect */
+}
+
+/* Links (outside of CLI) */
+main a:not(#cli a) {
+    color: var(--color);
+    text-decoration: none;
+}
+
+main a:not(#cli a):hover {
+    text-decoration: underline;
+    text-shadow: 0 0 5px var(--color);
+}
+
+/* Borders for sections */
+section:not(#cli) {
+    border: 1px solid var(--color);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* Hover effects for interactive elements */
+.project:hover, .skill:hover {
+    border-color: var(--color);
+}
+
+/* Accent for form elements */
+input:focus, textarea:focus {
+    border-color: var(--color);
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+}
+
+/* Submit button with accent */
+button[type="submit"] {
+    background-color: #001111;
+    color: var(--color);
+    border: 1px solid var(--color);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color);
+    color: #000000;
+}
