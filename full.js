@@ -3,7 +3,8 @@ gsap.registerPlugin(TextPlugin);
 
 // Initialize ScrollMagic
 var controller = new ScrollMagic.Controller();
-
+let skillBarsCreated = false;
+let bootSequenceCompleted = false;
 
 
 function disableScroll(){
@@ -197,18 +198,18 @@ function completeBootSequence() {
         setTimeout(() => {
             bootSequence.style.display = 'none';
             document.body.classList.add("loaded");
-            enableScroll(); // Enable scrolling after the boot sequence is complete
+            enableScroll();
+            bootSequenceCompleted = true; // Set the flag here
             revealMainContent();
-            
         }, 1000);
     }, 1000);
 }
+
 function skipBootSequence() {
     if (!isSkipped) {
         isSkipped = true;
         document.getElementById("boot-text").innerHTML = bootText.join("\n");
         completeBootSequence();
-        enableScroll(); // Enable scrolling after the boot sequence is complete
     }
 }
 
@@ -221,47 +222,57 @@ function revealMainContent() {
         mainContent.style.visibility = 'visible';
         mainContent.style.opacity = '1';
 
-        // Delay the initializtion of scroll magic
-       // Delay the initialization of ScrollMagic
-       setTimeout(() => {
+        // Initialize ScrollMagic immediately
         initScrollMagic();
         createSkillBars();
-    }, 100); // Small delay to ensure DOM is ready
-    
     } else {
         console.error('Main content not found');
     }
 
-    
     cli.init();
-    
 }
 
+
+
+
+
 function createSectionScene(section) {
-    var tl = gsap.timeline();
+    var tl = gsap.timeline({ paused: true });
     
-    tl.to(section, {duration: 0.3, opacity: 1, y: 0});
+    tl.to(section, { duration: 0.3, opacity: 1, y: 0 });
     
     section.querySelectorAll('.typing-text').forEach(function(element) {
-        var originalText = element.textContent.trim();
+        var originalText = element.getAttribute('data-original-text') || element.textContent.trim();
         if (originalText.length > 0) {
             element.setAttribute('data-original-text', originalText);
             element.textContent = '';
+            
             tl.to(element, {
-                duration: 0.8,
-                text: originalText, 
+                duration: originalText.length * 0.03, // Adjust speed as needed
+                text: {
+                    value: originalText,
+                    delimiter: ""
+                },
                 ease: "none"
-            }, "-=0.3");
+            }, "-=0.2");
         }
     });
 
-    new ScrollMagic.Scene({
+    return new ScrollMagic.Scene({
         triggerElement: section,
         triggerHook: 0.8,
         reverse: false
     })
-    .setTween(tl)
-    .addTo(controller);
+    .on('enter', function() {
+        if (bootSequenceCompleted) {
+            tl.play();
+        } else {
+            // If boot sequence hasn't completed, show text immediately
+            section.querySelectorAll('.typing-text').forEach(function(element) {
+                element.textContent = element.getAttribute('data-original-text') || '';
+            });
+        }
+    });
 }
 
 function initScrollMagic() {
@@ -271,9 +282,10 @@ function initScrollMagic() {
     var sections = document.querySelectorAll('section');
     sections.forEach(function(section) {
         gsap.set(section, {opacity: 0, y: 30});
-        createSectionScene(section);
+        createSectionScene(section).addTo(controller);
     });
 }
+
 
 const cli = {
     output: null,
@@ -421,6 +433,8 @@ if (this.input && this.output) {
 
 
 function createSkillBars() {
+    if (skillBarsCreated) return; // Prevent duplicate creation
+
     const skills = [
         { name: 'JavaScript', level: 90 },
         { name: 'React', level: 85 },
@@ -431,6 +445,12 @@ function createSkillBars() {
     ];
 
     const skillsContainer = document.getElementById('skills-container');
+    if (!skillsContainer) {
+        console.error('Skills container not found');
+        return;
+    }
+
+    skillsContainer.innerHTML = ''; // Clear existing content
 
     skills.forEach(skill => {
         const skillBar = document.createElement('div');
@@ -473,8 +493,9 @@ function createSkillBars() {
         });
     })
     .addTo(controller);
-}
 
+    skillBarsCreated = true;
+}
 
 function initializePortfolio() {
     const form = document.getElementById('contact-form');
