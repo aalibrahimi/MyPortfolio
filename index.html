@@ -153,6 +153,13 @@ __        __   _       ____
      <!-- Your custom JS file -->
     <!-- <script src="visitor.js"></script> -->
     <!-- <script src="pacman.js"></script> -->
+    <script>
+        let output = `<span class="cli-keyword">const</span> greeting = <span class="cli-string">"Hello, World!"</span>;
+        <span class="cli-function">console.log</span>(greeting);
+        <span class="cli-comment">// This is a comment</span>
+        <span class="cli-variable">let</span> number = <span class="cli-number">42</span>;`;
 
+        document.getElementById('cli-output').innerHTML += output;
+    </script>
 </body>
 </html>
