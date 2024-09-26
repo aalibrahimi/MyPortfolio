@@ -239,7 +239,7 @@ function revealMainContent() {
 function createSectionScene(section) {
     var tl = gsap.timeline({ paused: true });
     
-    tl.to(section, { duration: 0.3, opacity: 1, y: 0 });
+    tl.to(section, { duration: 0.2, opacity: 1, y: 0, ease: "power1.out" });
     
     section.querySelectorAll('.typing-text').forEach(function(element) {
         var originalText = element.getAttribute('data-original-text') || element.textContent.trim();
@@ -248,19 +248,19 @@ function createSectionScene(section) {
             element.textContent = '';
             
             tl.to(element, {
-                duration: originalText.length * 0.03, // Adjust speed as needed
+                duration: Math.max(0.5, originalText.length * 0.01), // Faster typing, minimum 0.5 seconds
                 text: {
                     value: originalText,
                     delimiter: ""
                 },
                 ease: "none"
-            }, "-=0.2");
+            }, "-=0.1"); // Reduced overlap for faster overall animation
         }
     });
 
     return new ScrollMagic.Scene({
         triggerElement: section,
-        triggerHook: 0.8,
+        triggerHook: 0.9, // Trigger slightly earlier
         reverse: false
     })
     .on('enter', function() {
