@@ -127,6 +127,10 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #001100;
     border: 1px solid #00ff00;
 }
+.project a {
+   color: beige;
+   
+}
 
 /* Skills styles */
 #skills ul {
