@@ -485,3 +485,7 @@ body::after {
 }
 
 /* Typing  */
+::selection {
+    background-color: rgb(246, 131, 202);
+    color: #000000;
+}

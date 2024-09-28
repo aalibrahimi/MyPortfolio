@@ -140,7 +140,43 @@ applications that solve real-world problems.
 `;
         this.appendOutput(projectsText);
     },
-
+    handleInput: function(e) {
+        if (e.key === 'Enter') {
+            const command = this.input.value.trim();
+            if (command !== '') {
+                this.history.push(command);
+                this.historyIndex = this.history.length;
+                this.processCommand(command);
+            }
+            this.input.value = '';
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (this.historyIndex > 0) {
+                this.historyIndex--;
+                this.input.value = this.history[this.historyIndex];
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (this.historyIndex < this.history.length - 1) {
+                this.historyIndex++;
+                this.input.value = this.history[this.historyIndex];
+            } else {
+                this.historyIndex = this.history.length;
+                this.input.value = '';
+            }
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            const availableCommands = ['help', 'about', 'skills', 'projects', 'contact', 'resume', 'clear'];
+            const command = this.input.value.trim().toLowerCase();
+            const matches = availableCommands.filter(cmd => cmd.startsWith(command));
+            if (matches.length === 1) {
+                this.input.value = matches[0];
+            } else if (matches.length > 1) {
+                this.appendOutput(`<span class="cli-comment">Available commands: ${matches.join(', ')}</span>`);
+            }
+        }
+    },
+    
     showContact: function() {
         const contactText = `
 <span class="cli-keyword">Contact Information:</span>
