@@ -1,11 +1,17 @@
 // CLI initialization and functionality
 const cli = {
-    output: document.getElementById('cli-output'),
-    input: document.getElementById('cli-input'),
+    output: null,
+    input: null,
     history: [],
     historyIndex: 0,
 
     init: function() {
+        this.output = document.getElementById('cli-output');
+        this.input = document.getElementById('cli-input');
+        if (!this.output || !this.input) {
+            console.error('CLI elements not found');
+            return;
+        }
         this.welcomeMessage();
         this.input.addEventListener('keydown', this.handleInput.bind(this));
         this.input.focus();
@@ -14,8 +20,6 @@ const cli = {
     welcomeMessage: function() {
         const message = `<span class="cli-success">Welcome to Ali Alibrahimi's Portfolio CLI!</span>
 <span class="cli-comment">Type 'help' for a list of available commands.</span>
-
-
 
 `;
         this.appendOutput(message);
@@ -151,19 +155,37 @@ applications that solve real-world problems.
     showResume: function() {
         const resumeText = `
 <span class="cli-keyword">Ali Alibrahimi's Resume:</span>
-You can view my full resume at: <span class="cli-string">https://docs.google.com/document/d/1z58CKgNj1d5XQ9NxkSaK15_fdPCzx8ev/edit?usp=sharing&ouid=114775191607140993368&rtpof=true&sd=true</span>
+<span class="cli-string">Downloading resume PDF...</span>
 `;
         this.appendOutput(resumeText);
+        
+        // Trigger PDF download
+        const link = document.createElement('a');
+        link.href = '/static/FullStack.pdf';
+        link.download = 'Ali_Alibrahimi_Resume.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        this.appendOutput('<span class="cli-success">Resume PDF download started. Check your downloads folder.</span>');
     },
 
     appendOutput: function(text) {
-        this.output.innerHTML += text + '<br>';
-        this.output.scrollTop = this.output.scrollHeight;
+        if (this.output) {
+            this.output.innerHTML += text + '<br>';
+            this.output.scrollTop = this.output.scrollHeight;
+        } else {
+            console.error('Output element not found');
+        }
     },
 
     clearOutput: function() {
-        this.output.innerHTML = '';
-        this.welcomeMessage();
+        if (this.output) {
+            this.output.innerHTML = '';
+            this.welcomeMessage();
+        } else {
+            console.error('Output element not found');
+        }
     }
 };
 
