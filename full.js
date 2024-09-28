@@ -50,16 +50,16 @@ function createLoadingBar() {
     const style = document.createElement('style');
     style.textContent = `
         #loading-bar-container {
-            --bottom-position: -37%;
+            --bottom-position: -60%;
         }
         @media (max-width: 1024px) {
             #loading-bar-container {
-                --bottom-position: -30%;
+                --bottom-position: -80%;
             }
         }
         @media (max-width: 768px) {
             #loading-bar-container {
-                --bottom-position: -70%;
+                --bottom-position: -80%;
             }
         }
         @media (max-width: 480px) {
@@ -114,7 +114,7 @@ function createLoadingBar() {
     progressText.style.cssText = `
         position: absolute;
         right: -40px;
-        top: 50%;
+        bottom: -32%;
         transform: translateY(-50%);
         color: #00ff00;
     `;

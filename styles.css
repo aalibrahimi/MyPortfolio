@@ -49,6 +49,7 @@ body.loaded section {
     align-items: center;
 }
 
+
 #boot-text {
     font-size: 16px;
     white-space: pre-wrap;
@@ -98,10 +99,10 @@ main {
 
 
 section {
-    margin-bottom: 10rem;
+    margin-bottom: 5rem;
     border: 1px solid #00ff00;
     padding: 1rem;
-    max-width: 750px; /* Reduce the maximum width */
+    max-width: 950px; /* Reduce the maximum width */
     margin-left: auto;
     margin-right: auto;
 
@@ -163,9 +164,11 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #000000;
     border: 1px solid #00ff00;
     padding: 30px 20px;
-    max-width: 760px;
+    max-width: 950px;
     margin: 0 auto 200px;
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+    margin-bottom: 2%;
+    
 }
 
 #contact h2 {
@@ -179,6 +182,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    
 }
 
 #contact-form input,
@@ -270,6 +274,7 @@ footer {
     height: 500px;
     font-family: 'Consolas', 'Courier New', monospace;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    margin-bottom: 4%;
 }
 
 #cli-output {
@@ -366,8 +371,7 @@ footer {
 #skills-container {
     width: 100%;
     max-width: 750px;
-    margin: 20px auto;
-    margin: 200px auto;
+   margin: 100px auto;
 }
 
 .skill-bar {
@@ -486,6 +490,57 @@ body::after {
 
 /* Typing  */
 ::selection {
-    background-color: rgb(246, 131, 202);
-    color: #000000;
+    background-color: none;
+    color: #ff89d0;
 }
+
+#about {
+    border: 2px solid #00ff00; /* Keep the retro green border */
+    padding: 1rem; /* Maintain padding */
+    margin: 20px auto; /* Center the section */
+    max-width: 950px; 
+    margin-left: auto;
+    margin-right: auto;
+    color: #00ff00; /* Keep the retro green text */
+    font-family: 'Courier New', monospace; /* Keep the retro style */
+    font-weight: 500; /* Slightly bold for better readability */
+    line-height: 1.8; /* Increase line height for spacing */
+    text-align: justify; /* Justify text for neat alignment */
+    text-shadow: 1px 1px 2px #000; /* Subtle shadow to make text stand out */
+    margin-bottom: 4%;
+}
+
+
+
+#visitor-count-container {
+    position: fixed;
+    bottom: 20px; /* Default position at the bottom right on larger screens */
+    right: 20px;
+    background-color: #000;
+    color: #00ff00;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+    z-index: 9999;
+    max-width: 150px;
+    max-height: 50px;
+    overflow: hidden;
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+}
+#visitor-count {
+    margin-right: 5px; /* Add spacing between the number and 'visitors' */
+}
+
+/* Adjust position for smaller screens */
+@media (max-width: 480px) {
+    #visitor-count-container {
+        top: 20px; /* Move it to the top right on smaller screens */
+        bottom: unset; /* Unset bottom to avoid conflict */
+    }
+}
+
