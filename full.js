@@ -210,6 +210,9 @@ function skipBootSequence() {
         isSkipped = true;
         document.getElementById("boot-text").innerHTML = bootText.join("\n");
         completeBootSequence();
+        
+        // Force re-trigger of ScrollMagic scenes
+        controller.update(true);
     }
 }
 
@@ -236,7 +239,7 @@ function revealMainContent() {
 
 
 
-function createSectionScene(section) {
+function createSectionScene(section, index) {
     var tl = gsap.timeline({ paused: true });
     
     tl.to(section, { duration: 0.2, opacity: 1, y: 0, ease: "power1.out" });
@@ -248,26 +251,39 @@ function createSectionScene(section) {
             element.textContent = '';
             
             tl.to(element, {
-                duration: Math.max(0.5, originalText.length * 0.01), // Faster typing, minimum 0.5 seconds
+                duration: Math.max(0.5, originalText.length * 0.01),
                 text: {
                     value: originalText,
                     delimiter: ""
                 },
                 ease: "none"
-            }, "-=0.1"); // Reduced overlap for faster overall animation
+            }, "-=0.1");
         }
     });
 
+    let triggerHook = 0.9;
+    let offset = 0;
+
+    // Special handling for the 3rd section
+    if (index === 2) {  // 0-based index, so 2 is the 3rd section
+        triggerHook = 0.85;  // This will trigger when 60% of the section is visible
+        offset = 100;  // Add a small offset to ensure it's past 60%
+    }
+
     return new ScrollMagic.Scene({
         triggerElement: section,
-        triggerHook: 0.9, // Trigger slightly earlier
+        triggerHook: triggerHook,
+        offset: offset,
         reverse: false
     })
     .on('enter', function() {
         if (bootSequenceCompleted) {
-            tl.play();
+            if (isSkipped) {
+                tl.timeScale(2).play();
+            } else {
+                tl.play();
+            }
         } else {
-            // If boot sequence hasn't completed, show text immediately
             section.querySelectorAll('.typing-text').forEach(function(element) {
                 element.textContent = element.getAttribute('data-original-text') || '';
             });
@@ -280,9 +296,9 @@ function initScrollMagic() {
     document.body.style.visibility = 'visible';
     document.body.style.opacity = '1';
     var sections = document.querySelectorAll('section');
-    sections.forEach(function(section) {
+    sections.forEach(function(section, index) {
         gsap.set(section, {opacity: 0, y: 30});
-        createSectionScene(section).addTo(controller);
+        createSectionScene(section, index).addTo(controller);
     });
 }
 
