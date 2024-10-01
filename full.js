@@ -265,7 +265,7 @@ function createSectionScene(section, index) {
     let offset = 0;
 
     // Special handling for the 3rd section
-    if (index === 2) {  // 0-based index, so 2 is the 3rd section
+    if (index === 2 ) {  // 0-based index, so 2 is the 3rd section
         triggerHook = 0.85;  // This will trigger when 60% of the section is visible
         offset = 100;  // Add a small offset to ensure it's past 60%
     }
