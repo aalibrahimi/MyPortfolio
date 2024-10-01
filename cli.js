@@ -197,7 +197,7 @@ applications that solve real-world problems.
         
         // Trigger PDF download
         const link = document.createElement('a');
-        link.href = 'https://drive.google.com/file/d/1evH78ZjVRUTVZ62ZNSxMEt5XhPjDtBBD/view?usp=sharing';
+        link.href = 'https://drive.google.com/file/d/11TROCA-o0ov__8OKqOJo3V1VOwgALxgK/view?usp=sharing';
         link.download = 'Ali_Alibrahimi_Resume.pdf';
         document.body.appendChild(link);
         link.click();
