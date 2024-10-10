@@ -34,14 +34,17 @@ function enableScroll(){
 }
 
 const bootText = [
-    "BIOS Version 1.0.2424",
-    "Copyright (C) 2024, Ali Alibrahimi",
-    "CPU: AliTech 686 at 66 MHz",
-    "Memory Test: 640K OK",
-    "Hard Disk: 80 MB",
+    "AliOS BIOS Version 10.2024",
+    "CPU: AliTech Core - Optimized for Front-End Development",
+    "Memory Test: 6 Years of Software Development Experience",
+    "Hard Disk: 80 MB - Loaded with Creative Projects",
     "Loading portfolio.sys...",
+    "Loading: Front-End Developer & UI/UX Designer",
+    "Skills: Node.js, React, Next.js, Tailwind CSS",
+    "Projects: Responsive Websites & Interactive Apps",
     "Welcome to Ali's Portfolio OS"
 ];
+
 
 let isSkipped = false;
 const typingSpeed = 25;

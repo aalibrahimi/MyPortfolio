@@ -19,7 +19,15 @@ const cli = {
 
     welcomeMessage: function() {
         const message = `<span class="cli-success">Welcome to Ali Alibrahimi's Portfolio CLI!</span>
-<span class="cli-comment">Type 'help' for a list of available commands.</span>
+<span class="cli-comment">
+<span class="cli-keyword">Available commands:</span>
+  <span class="cli-function">help</span>     : Show this help message
+  <span class="cli-function">about</span>    : Display information about Ali Alibrahimi
+  <span class="cli-function">skills</span>   : List Ali's technical skills
+  <span class="cli-function">projects</span> : Show Ali's notable projects
+  <span class="cli-function">contact</span>  : Display contact information
+  <span class="cli-function">resume</span>   : View Ali's resume
+  <span class="cli-function">clear</span>    : Clear the console output</span>
 
 `;
         this.appendOutput(message);
@@ -180,7 +188,7 @@ applications that solve real-world problems.
     showContact: function() {
         const contactText = `
 <span class="cli-keyword">Contact Information:</span>
-• Email: ali.alibrahimi@example.com
+• Email: aalibrahimi0@gmail.com
 • LinkedIn: linkedin.com/in/alialibrahimi
 • GitHub: github.com/alialibrahimi
 • Portfolio: alialibrahimi.com
