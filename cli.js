@@ -188,19 +188,81 @@ applications that solve real-world problems.
     showContact: function() {
         const contactText = `
 <span class="cli-keyword">Contact Information:</span>
-• Email: aalibrahimi0@gmail.com
-• LinkedIn: linkedin.com/in/alialibrahimi
-• GitHub: github.com/alialibrahimi
-• Portfolio: alialibrahimi.com
+• <span class="cli-link" data-action="email"><i class="fas fa-envelope"></i>Email: aalibrahimi0@gmail.com</span>
+• <span class="cli-link" data-action="linkedin"><i class="fab fa-linkedin"></i>LinkedIn: linkedin.com/in/alialibrahimi</span>
+• <span class="cli-link" data-action="github"><i class="fab fa-github"></i>GitHub: github.com/alialibrahimi</span>
+
+
+<span class="cli-comment">Type 'contact [option]' or click on a link to interact </span>
 `;
         this.appendOutput(contactText);
+        this.addContactEventListeners();
     },
 
-    showResume: function() {
-        const resumeText = `
-<span class="cli-keyword">Ali Alibrahimi's Resume:</span>
-<span class="cli-string">Downloading resume PDF...</span>
-`;
+    addContactEventListeners: function() {
+        const links = this.output.querySelectorAll('.cli-link');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const action = e.target.getAttribute('data-action');
+                this.handleContactInteraction(action);
+            });
+        });
+    },
+
+    handleContactInteraction: function(action) {
+        switch(action) {
+            case 'email':
+                window.location.href = 'mailto:aalibrahimi0@gmail.com';
+                break;
+            case 'linkedin':
+                window.open('https://linkedin.com/in/aalibrahimi', '_blank');
+                break;
+            case 'github':
+                window.open('https://github.com/aalibrahimi', '_blank');
+                break;
+            case 'portfolio':
+                window.open('https://alialibrahimi.com', '_blank');
+                break;
+            default:
+                this.appendOutput(`<span class="cli-error">Invalid contact option. Available options: email, linkedin, github, portfolio</span>`);
+        }
+    },
+
+    processCommand: function(command) {
+        this.appendOutput(`<span class="cli-variable">$ ${command}</span>`);
+        
+        const [mainCommand, ...args] = command.toLowerCase().split(' ');
+        
+        switch(mainCommand) {
+            case 'help':
+                this.showHelp();
+                break;
+            case 'about':
+                this.showAbout();
+                break;
+            case 'skills':
+                this.showSkills();
+                break;
+            case 'projects':
+                this.showProjects();
+                break;
+            case 'contact':
+                if (args.length > 0) {
+                    this.handleContactInteraction(args[0]);
+                } else {
+                    this.showContact();
+                }
+                break;
+            case 'clear':
+                this.clearOutput();
+                break;
+            case 'resume':
+                this.showResume();
+                break;
+            default:
+                this.appendOutput(`<span class="cli-error">Command not recognized. Type 'help' for a list of commands.</span>`);
+        }
+    
         this.appendOutput(resumeText);
         
         // Trigger PDF download
@@ -218,10 +280,14 @@ applications that solve real-world problems.
         if (this.output) {
             this.output.innerHTML += text + '<br>';
             this.output.scrollTop = this.output.scrollHeight;
+            
+            // Add contact event listeners after the output is updated
+            this.addContactEventListeners();
         } else {
             console.error('Output element not found');
         }
-    },
+    }
+    ,
 
     clearOutput: function() {
         if (this.output) {

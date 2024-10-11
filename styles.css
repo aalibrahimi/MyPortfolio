@@ -544,3 +544,20 @@ body::after {
     }
 }
 
+/* command line contacts */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+.cli-link {
+    color: #91def8;
+    /* text-decoration: underline; */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.cli-link:hover {
+    color: #2a70c2;
+}
+
+.cli-link i {
+    margin-right: 5px;
+}
