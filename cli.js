@@ -41,7 +41,7 @@ const cli = {
                 this.historyIndex = this.history.length;
                 this.processCommand(command);
             }
-            this.input.value = '';
+            this.input.value = '';  // Clear the input field after processing
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
             if (this.historyIndex > 0) {
@@ -63,7 +63,9 @@ const cli = {
     processCommand: function(command) {
         this.appendOutput(`<span class="cli-variable">$ ${command}</span>`);
         
-        switch(command.toLowerCase()) {
+        const [mainCommand, ...args] = command.toLowerCase().split(' ');
+        
+        switch(mainCommand) {
             case 'help':
                 this.showHelp();
                 break;
@@ -77,7 +79,11 @@ const cli = {
                 this.showProjects();
                 break;
             case 'contact':
-                this.showContact();
+                if (args.length > 0) {
+                    this.handleContactInteraction(args[0]);
+                } else {
+                    this.showContact();
+                }
                 break;
             case 'clear':
                 this.clearOutput();
@@ -148,42 +154,6 @@ applications that solve real-world problems.
 `;
         this.appendOutput(projectsText);
     },
-    handleInput: function(e) {
-        if (e.key === 'Enter') {
-            const command = this.input.value.trim();
-            if (command !== '') {
-                this.history.push(command);
-                this.historyIndex = this.history.length;
-                this.processCommand(command);
-            }
-            this.input.value = '';
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (this.historyIndex > 0) {
-                this.historyIndex--;
-                this.input.value = this.history[this.historyIndex];
-            }
-        } else if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            if (this.historyIndex < this.history.length - 1) {
-                this.historyIndex++;
-                this.input.value = this.history[this.historyIndex];
-            } else {
-                this.historyIndex = this.history.length;
-                this.input.value = '';
-            }
-        } else if (e.key === 'Tab') {
-            e.preventDefault();
-            const availableCommands = ['help', 'about', 'skills', 'projects', 'contact', 'resume', 'clear'];
-            const command = this.input.value.trim().toLowerCase();
-            const matches = availableCommands.filter(cmd => cmd.startsWith(command));
-            if (matches.length === 1) {
-                this.input.value = matches[0];
-            } else if (matches.length > 1) {
-                this.appendOutput(`<span class="cli-comment">Available commands: ${matches.join(', ')}</span>`);
-            }
-        }
-    },
     
     showContact: function() {
         const contactText = `
@@ -192,8 +162,7 @@ applications that solve real-world problems.
 • <span class="cli-link" data-action="linkedin"><i class="fab fa-linkedin"></i>LinkedIn: linkedin.com/in/alialibrahimi</span>
 • <span class="cli-link" data-action="github"><i class="fab fa-github"></i>GitHub: github.com/alialibrahimi</span>
 
-
-<span class="cli-comment">Type 'contact [option]' or click on a link to interact </span>
+<span class="cli-comment">Type 'contact [option]' or click on a link to interact</span>
 `;
         this.appendOutput(contactText);
         this.addContactEventListeners();
@@ -218,76 +187,33 @@ applications that solve real-world problems.
                 window.open('https://linkedin.com/in/aalibrahimi', '_blank');
                 break;
             case 'github':
-                window.open('https://github.com/aalibrahimi', '_blank');
-                break;
-            case 'portfolio':
-                window.open('https://alialibrahimi.com', '_blank');
+                window.open('https://github.com/alialibrahimi', '_blank');
                 break;
             default:
-                this.appendOutput(`<span class="cli-error">Invalid contact option. Available options: email, linkedin, github, portfolio</span>`);
+                this.appendOutput(`<span class="cli-error">Invalid contact option. Available options: email, linkedin, github</span>`);
         }
     },
 
-    processCommand: function(command) {
-        this.appendOutput(`<span class="cli-variable">$ ${command}</span>`);
-        
-        const [mainCommand, ...args] = command.toLowerCase().split(' ');
-        
-        switch(mainCommand) {
-            case 'help':
-                this.showHelp();
-                break;
-            case 'about':
-                this.showAbout();
-                break;
-            case 'skills':
-                this.showSkills();
-                break;
-            case 'projects':
-                this.showProjects();
-                break;
-            case 'contact':
-                if (args.length > 0) {
-                    this.handleContactInteraction(args[0]);
-                } else {
-                    this.showContact();
-                }
-                break;
-            case 'clear':
-                this.clearOutput();
-                break;
-            case 'resume':
-                this.showResume();
-                break;
-            default:
-                this.appendOutput(`<span class="cli-error">Command not recognized. Type 'help' for a list of commands.</span>`);
-        }
-    
+    showResume: function() {
+        const resumeText = `
+<span class="cli-keyword">Resume:</span>
+Click the link below to view and download the resume:
+<a href="https://drive.google.com/file/d/1evH78ZjVRUTVZ62ZNSxMEt5XhPjDtBBD/view?usp=sharing" target="_blank">Download Resume (PDF)</a>
+`;
         this.appendOutput(resumeText);
-        
-        // Trigger PDF download
-        const link = document.createElement('a');
-        link.href = 'https://drive.google.com/file/d/1evH78ZjVRUTVZ62ZNSxMEt5XhPjDtBBD/view?usp=sharing';
-        link.download = 'Ali_Alibrahimi_Resume.pdf';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        this.appendOutput('<span class="cli-success">Resume PDF download started. Check your downloads folder.</span>');
     },
 
     appendOutput: function(text) {
         if (this.output) {
             this.output.innerHTML += text + '<br>';
             this.output.scrollTop = this.output.scrollHeight;
-            
+
             // Add contact event listeners after the output is updated
             this.addContactEventListeners();
         } else {
             console.error('Output element not found');
         }
-    }
-    ,
+    },
 
     clearOutput: function() {
         if (this.output) {
