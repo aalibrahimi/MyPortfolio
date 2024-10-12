@@ -159,8 +159,8 @@ applications that solve real-world problems.
         const contactText = `
 <span class="cli-keyword">Contact Information:</span>
 • <span class="cli-link" data-action="email"><i class="fas fa-envelope"></i>Email: aalibrahimi0@gmail.com</span>
-• <span class="cli-link" data-action="linkedin"><i class="fab fa-linkedin"></i>LinkedIn: linkedin.com/in/alialibrahimi</span>
-• <span class="cli-link" data-action="github"><i class="fab fa-github"></i>GitHub: github.com/alialibrahimi</span>
+• <span class="cli-link" data-action="linkedin"><i class="fab fa-linkedin"></i>LinkedIn: linkedin.com/in/aalibrahimi</span>
+• <span class="cli-link" data-action="github"><i class="fab fa-github"></i>GitHub: github.com/aalibrahimi</span>
 
 <span class="cli-comment">Type 'contact [option]' or click on a link to interact</span>
 `;
@@ -187,7 +187,7 @@ applications that solve real-world problems.
                 window.open('https://linkedin.com/in/aalibrahimi', '_blank');
                 break;
             case 'github':
-                window.open('https://github.com/alialibrahimi', '_blank');
+                window.open('https://github.com/aalibrahimi', '_blank');
                 break;
             default:
                 this.appendOutput(`<span class="cli-error">Invalid contact option. Available options: email, linkedin, github</span>`);
