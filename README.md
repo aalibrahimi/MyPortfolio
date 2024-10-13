@@ -28,12 +28,14 @@ You can also check out my [portfolio](https://aalibrahimi.github.io/MyPortfolio/
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/YourUsername/Ali-Cli.git
+     git clone https://github.com/aalibrahimi/MyPortfolio.git
+
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd Ali-Cli
+   cd MyPortfolio
+
    ```
 
 3. Install the required dependencies:
