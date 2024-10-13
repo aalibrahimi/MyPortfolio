@@ -38,39 +38,47 @@ You can also check out my [portfolio](https://aalibrahimi.github.io/MyPortfolio/
 
    ```
 
-3. Install the required dependencies:
-   ```bash
-   npm install
-   ```
-
 ---
 
 ## 🚀 Usage
 
-To start the CLI, run the following command:
 
-```bash
-npm start
-```
 
 Once the interface is running, you can type commands to explore the portfolio. Type `help` to see the full list of available commands.
 
 ---
 
-## 💻 Commands
 
-Here’s a list of the available commands you can use in **Ali CLI**:
 
-| Command     | Description                                         |
-|-------------|-----------------------------------------------------|
-| `help`      | Displays the list of available commands             |
-| `about`     | Provides information about me                       |
-| `skills`    | Shows a list of technical skills                    |
-| `projects`  | Lists the projects I’ve worked on                   |
-| `contact`   | Shows contact information                           |
-| `resume`    | Provides a link to download my resume               |
-| `clear`     | Clears the command line                             |
+## 🚀 Commands
 
+Here’s a complete list of the available commands you can use in **Ali CLI**:
+
+| **Command**            | **Description**                                                |
+|------------------------|----------------------------------------------------------------|
+| `help`                 | **Displays the list of available commands**                    |
+| `about`                | *Provides information about me*                                |
+| `skills`               | *Shows a list of technical skills*                             |
+| `projects`             | **Lists the projects I’ve worked on**                          |
+| `resume`               | **Provides a link to download my resume**                      |
+| `contact`              | *Shows general contact information*                            |
+| `contact email`        | *Opens a new tab to send an email*                             |
+| `contact linkedin`     | *Opens a new tab to view my LinkedIn profile*                  |
+| `contact github`       | *Opens a new tab to view my GitHub profile*                    |
+| `clear`                | **Clears the command line**                                    |
+| **Up / Down Arrow**    | *Navigate through command history*                             |
+| **Tab**                | *Auto-completes commands for faster typing*                    |
+
+---
+
+### Example Usage:
+- Use `help` to get a list of all available commands.
+- Type `about` to learn more about me.
+- Use `projects` to see what I’ve worked on.
+
+
+
+---
 
 ## 🤝 Contributing
 
