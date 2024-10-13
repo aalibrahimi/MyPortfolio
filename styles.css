@@ -159,7 +159,7 @@ h1, h2, h3, h4, h5, h6 {
 .skill-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 .skill-name {
@@ -168,6 +168,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .skill-level-description {
     color: #00ff00;
+   
 }
 
 .skill-bar-container {
@@ -195,7 +196,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .skill-label {
     text-align: right;
-    font-size: 0.8em;
+    font-size: 0.7em;
     color: #888;
 }
 
