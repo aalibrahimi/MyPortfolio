@@ -4,6 +4,8 @@
 **Ali CLI** is an interactive command-line interface for my portfolio. It allows users to explore my technical skills, projects, and contact information in a fun and engaging way!
 You can also check out my [portfolio](https://aalibrahimi.github.io/MyPortfolio/) for more details!
 
+---
+
 ## Table of Contents
 - [Features](#features)
 - [Installation](#installation)
@@ -11,6 +13,8 @@ You can also check out my [portfolio](https://aalibrahimi.github.io/MyPortfolio/
 - [Commands](#commands)
 - [Contributing](#contributing)
 - [Contact](#contact)
+
+
 
 ---
 
