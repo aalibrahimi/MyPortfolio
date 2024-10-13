@@ -148,6 +148,55 @@ h1, h2, h3, h4, h5, h6 {
     color: #00ff00;
     padding: 0.5rem 1rem;
     border: 1px solid #00ff00;
+
+}
+.skill-bar {
+    margin-bottom: 30px;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.skill-name {
+    font-weight: bold;
+}
+
+.skill-level-description {
+    color: #00ff00;
+}
+
+.skill-bar-container {
+    background-color: #111;
+    height: 20px;
+    position: relative;
+    border: 1px solid #00ff00;
+    margin-bottom: 2px;
+}
+
+.skill-level {
+    height: 100%;
+    background-color: #00ff00;
+    transition: width 1s ease-out;
+}
+
+.skill-percentage {
+    position: absolute;
+    left: 760px;
+    top: -10%;
+    transform: translateY(-50%);
+    color: #00f81d;
+    font-weight: bold;
+}
+
+.skill-label {
+    text-align: right;
+    font-size: 0.8em;
+    color: #888;
 }
 
 /* Resume styles */

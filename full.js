@@ -333,15 +333,26 @@ function createSkillBars() {
 
     skillsContainer.innerHTML = ''; // Clear existing content
 
+    function getSkillLevelDescription(level) {
+        if (level >= 90) return 'Expert';
+        if (level >= 80) return 'Advanced';
+        if (level >= 70) return 'Proficient';
+        return 'Skilled';
+    }
+
     skills.forEach(skill => {
         const skillBar = document.createElement('div');
         skillBar.className = 'skill-bar';
         skillBar.innerHTML = `
-            <div class="skill-name">${skill.name}</div>
+            <div class="skill-info">
+                <span class="skill-name">${skill.name}</span>
+                <span class="skill-level-description">${getSkillLevelDescription(skill.level)}</span>
+            </div>
             <div class="skill-bar-container">
                 <div class="skill-level" data-level="${skill.level}" style="width: 0%"></div>
                 <div class="skill-percentage">0%</div>
             </div>
+            <div class="skill-label">Proficiency</div>
         `;
         skillsContainer.appendChild(skillBar);
     });
@@ -377,6 +388,8 @@ function createSkillBars() {
 
     skillBarsCreated = true;
 }
+
+
 
 function initializePortfolio() {
     const form = document.getElementById('contact-form');
