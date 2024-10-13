@@ -88,7 +88,7 @@ To contribute:
 
 Have any questions or feedback? Feel free to reach out to me via email:
 
-- **Email**: [YourEmail@example.com](mailto:aalibrahimi0@gmail.com)
+- **Email**: [aalibrahimi0@gmail.com](mailto:aalibrahimi0@gmail.com)
 
 
 
