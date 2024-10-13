@@ -47,7 +47,8 @@ const bootText = [
 
 
 let isSkipped = false;
-const typingSpeed = 25;
+const typingSpeed = 4; // Reduced from 1 to 0.5 for faster typing
+const lineDelay = 0.5; // Reduced from 1 to 0.5 for faster progression between lines
 
 function createLoadingBar() {
     const style = document.createElement('style');
@@ -154,6 +155,8 @@ function updateLoadingBar(progress) {
     }
 }
 
+
+
 function typeWriter(text, i, fnCallback) {
     const bootText = document.getElementById("boot-text");
     if (!bootText) {
@@ -170,11 +173,13 @@ function typeWriter(text, i, fnCallback) {
     if (i < text.length) {
         bootText.innerHTML += text.charAt(i);
         i++;
-        setTimeout(() => typeWriter(text, i, fnCallback), 25);
+        setTimeout(() => typeWriter(text, i, fnCallback), typingSpeed);
     } else if (typeof fnCallback === 'function') {
-        setTimeout(fnCallback, 700);
+        setTimeout(fnCallback, lineDelay * 1000); // Convert lineDelay to milliseconds
     }
 }
+
+
 
 function startBootSequence(i) {
     if (i === 0) {
