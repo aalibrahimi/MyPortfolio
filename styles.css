@@ -310,21 +310,22 @@ footer {
 }
 
 /* CLI styles */
+/* CLI styles */
 #cli {
     background-color: #000000;
     color: #ffffff;
     padding: 20px;
     border: 1px solid #333333;
-    margin-bottom: 30px;
+    margin: 30px auto 4% auto;
     max-width: 950px;
-    margin-left: auto;
-    margin-right: auto;
     box-sizing: border-box;
     position: relative;
     height: 500px;
     font-family: 'Consolas', 'Courier New', monospace;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    margin-bottom: 4%;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    margin-top: 50px; /* Increased top margin */
 }
 
 #cli-output {
@@ -334,6 +335,7 @@ footer {
     overflow-y: auto;
     font-size: 14px;
     padding-bottom: 30px;
+    line-height: 1.5;
 }
 
 #cli-input-line {
@@ -343,6 +345,9 @@ footer {
     left: 20px;
     bottom: 10px;
     width: calc(100% - 40px);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 5px;
+    border-radius: 4px;
 }
 
 #cli-input {
@@ -353,44 +358,149 @@ footer {
     font-family: inherit;
     font-size: 14px;
     outline: none;
+    padding: 5px;
 }
 
-/* Add a prompt before the input */
+/* Updated prompt style */
 #cli-input-line::before {
-    content: '$ ';
+    content: 'ali@developer:~$ ';  /* Your preferred CLI prompt */
     color: #00ff00;
     margin-right: 5px;
+    font-weight: bold;
 }
 
-/* Syntax highlighting for CLI output */
-.cli-keyword { color: #ff7b00; }
-.cli-string { color: #ffd700; }
-.cli-number { color: #00ffff; }
-.cli-comment { color: #808080; }
-.cli-variable { color: #ff69b4; }
-.cli-function { color: #00ff00; }
-.cli-error { color: #ff0000; }
-.cli-success { color: #00ff00; }
+/* Enhanced syntax highlighting */
+.cli-keyword { 
+    color: #ff7b00; 
+    font-weight: bold;
+}
+.cli-string { 
+    color: #ffd700; 
+}
+.cli-number { 
+    color: #00ffff; 
+}
+.cli-comment { 
+    color: #808080; 
+    font-style: italic;
+}
+.cli-variable { 
+    color: #ff69b4; 
+}
+.cli-function { 
+    color: #00ff00; 
+    font-weight: bold;
+}
+.cli-error { 
+    color: #ff3333; 
+    font-weight: bold;
+}
+.cli-success { 
+    color: #00ff00; 
+}
 
-/* Custom scrollbar for CLI */
-#cli::-webkit-scrollbar {
-    width: 10px;
+/* Link styles */
+.cli-link {
+    color: #3498db;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.cli-link:hover {
+    color: #2980b9;
+}
+
+/* Improved scrollbar styles */
+#cli-output::-webkit-scrollbar {
+    width: 8px;
     background-color: #1a1a1a;
 }
 
-#cli::-webkit-scrollbar-thumb {
+#cli-output::-webkit-scrollbar-thumb {
     background-color: #333333;
     border: 2px solid #1a1a1a;
-    border-radius: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
-#cli::-webkit-scrollbar-thumb:hover {
+#cli-output::-webkit-scrollbar-thumb:hover {
     background-color: #444444;
 }
 
-#cli::-webkit-scrollbar-track {
+#cli-output::-webkit-scrollbar-track {
     background-color: #1a1a1a;
-    border-radius: 10px;
+    border-radius: 4px;
+}
+
+/* Selection style */
+::selection {
+    background: rgba(0, 255, 0, 0.2);
+    color: #ffffff;
+}
+
+/* Optional: Add a subtle glow effect */
+#cli::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+    pointer-events: none;
+}
+
+/* Enhanced terminal header */
+#cli::before {
+    content: '';
+    position: absolute;
+    top: -30px; /* Positioning above the terminal */
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: #1c1c1c;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid #333333;
+    border-bottom: none;
+}
+
+/* Terminal control buttons */
+#cli::after {
+    content: '';
+    position: absolute;
+    top: -22px; /* Positioning buttons within the header */
+    left: 15px;
+    width: 12px;
+    height: 12px;
+    background: #ff5f57; /* Red close button */
+    border-radius: 50%;
+    box-shadow: 
+        20px 0 0 #febc2e, /* Yellow minimize button */
+        40px 0 0 #28c841; /* Green maximize button */
+}
+#cli-output {
+    height: calc(100% - 40px);
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    font-size: 14px;
+    padding-bottom: 30px;
+    line-height: 1.5;
+    padding-top: 10px; /* Added top padding */
+}
+
+/* Optional: Add title to the terminal */
+.terminal-title {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 1;
 }
 
 /* Boot sequence styles */

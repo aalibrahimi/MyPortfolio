@@ -61,7 +61,7 @@ const cli = {
     },
 
     processCommand: function(command) {
-        this.appendOutput(`<span class="cli-variable">$ ${command}</span>`);
+        this.appendOutput(`<span class="cli-variable">ali@web-dev:~$ ${command}</span>`);
         
         const [mainCommand, ...args] = command.toLowerCase().split(' ');
         
