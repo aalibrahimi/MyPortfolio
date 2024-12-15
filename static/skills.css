@@ -1,0 +1,130 @@
+/* Skills Container */
+#skills-container {
+    margin: 2rem auto;
+    padding: 1rem;
+    max-width: 750px;
+    background: #000;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* Individual Skill Bar */
+.skill-bar {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #001100;
+    border: 1px solid #00ff00;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.skill-bar:hover {
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    z-index: 2;
+}
+
+/* Skill Info (Top Row) */
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.skill-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #00ff00;
+}
+
+.skill-level-description {
+    color: #00ff00;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.expand-btn {
+    cursor: pointer;
+    color: #00ff00;
+    transition: all 0.3s ease;
+}
+
+.expand-btn:hover {
+    text-shadow: 0 0 5px #00ff00;
+    color: #fff;
+}
+
+/* Skill Bar Container */
+.skill-bar-container {
+    background-color: #000;
+    border: 1px solid #00ff00;
+    height: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-level {
+    height: 100%;
+    background: #00ff00;
+    transition: width 1s ease-out;
+}
+
+/* Skill Percentage */
+.skill-percentage {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Expanded Skill Details */
+.skill-details {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background: #000;
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+    color: #00ff00;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.detail-line,
+.detail-specialties,
+.detail-work {
+    margin-bottom: 5px;
+}
+
+.detail-specialties {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+.detail-work {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+/* Skill Bar Hover to Reveal Details */
+.skill-bar:hover .skill-details {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

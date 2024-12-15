@@ -1,0 +1,337 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.6;
+    color: #00ff00;
+    background-color: #000000;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+body, main, section, header, footer, div {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    
+}
+
+
+body.loaded main,
+body.loaded section {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+#boot-sequence {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#boot-text {
+    font-size: 16px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Remove any CSS that might be hiding your content */
+
+/* Header styles */
+header {
+    background-color: #001100;
+    padding: 1rem 0;
+    border-bottom: 2px solid #00ff00;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fefefe;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main content styles */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+
+section {
+    margin-bottom: 5rem;
+    border: 1px solid #00ff00;
+    padding: 1rem;
+    max-width: 950px; /* Reduce the maximum width */
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+section:last-child {
+    margin-bottom: 0;
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #00ff00;
+    margin-bottom: 1rem;
+}
+
+/* Projects styles */
+.project {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #001100;
+    border: 1px solid #00ff00;
+}
+.project a {
+   color: beige;
+   
+}
+
+/* Skills styles */
+#skills ul {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    
+}
+
+#skills li {
+    background-color: #001100;
+    color: #00ff00;
+    padding: 0.5rem 1rem;
+    border: 1px solid #00ff00;
+
+}
+/* .skill-bar {
+    margin-bottom: 30px;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+} */
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+}
+
+.skill-name {
+    font-weight: bold;
+}
+
+.skill-level-description {
+    color: #00ff00;
+   
+}
+
+.skill-bar-container {
+    background-color: #111;
+    height: 20px;
+    position: relative;
+    border: 1px solid #00ff00;
+    margin-bottom: 2px;
+}
+
+.skill-level {
+    height: 100%;
+    background-color: #00ff00;
+    transition: width 1s ease-out;
+}
+
+.skill-percentage {
+    position: absolute;
+    left: 760px;
+    top: -10%;
+    transform: translateY(-50%);
+    color: #00f81d;
+    font-weight: bold;
+}
+
+.skill-label {
+    text-align: right;
+    font-size: 0.7em;
+    color: #888;
+}
+
+/* Resume styles */
+.resume-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #001100;
+    border: 1px solid #00ff00;
+}
+
+/* Contact styles */
+#contact {
+    background-color: #000000;
+    border: 1px solid #00ff00;
+    padding: 30px 20px;
+    max-width: 950px;
+    margin: 0 auto 200px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+    margin-bottom: 2%;
+    
+}
+
+#contact h2 {
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    text-align: left;
+    padding-left: 5%;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+
+#contact-form input,
+#contact-form textarea {
+    background-color: #001100;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+    width: 90%;
+    margin: 0 auto;
+    font-size: 1em;
+}
+
+#contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+#contact-form button,
+button {
+    background-color: #001100;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    font-family: 'Courier New', monospace;
+    width: 90%;
+    margin: 20px auto 10px;
+    font-size: 1em;
+}
+
+button {
+    padding: 0.8rem 1rem;
+    margin-bottom: 50px;
+}
+
+#contact-form button:hover,
+button:hover {
+    background-color: #002200;
+}
+
+#contact-form button:active {
+    transform: scale(0.98);
+}
+
+/* Footer styles */
+footer {
+    background-color: #001100;
+    color: #00ff00;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: auto;
+    border-top: 2px solid #00ff00;
+}
+
+/* Retro terminal effect */
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+/* Typing  */
+::selection {
+    background-color: none;
+    color: #ff89d0;
+}
+
+
+
+
+
+#visitor-count-container {
+    position: fixed;
+    bottom: 20px; /* Default position at the bottom right on larger screens */
+    right: 20px;
+    background-color: #000;
+    color: #00ff00;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+    z-index: 9999;
+    max-width: 150px;
+    max-height: 50px;
+    overflow: hidden;
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+}
+#visitor-count {
+    margin-right: 5px; /* Add spacing between the number and 'visitors' */
+}
+
+/* Adjust position for smaller screens */
+@media (max-width: 480px) {
+    #visitor-count-container {
+        top: 20px; /* Move it to the top right on smaller screens */
+        bottom: unset; /* Unset bottom to avoid conflict */
+    }
+}
