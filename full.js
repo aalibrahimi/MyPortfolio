@@ -312,17 +312,50 @@ function initScrollMagic() {
 
 
 
-
 function createSkillBars() {
-    if (skillBarsCreated) return; // Prevent duplicate creation
+    if (skillBarsCreated) return;
 
     const skills = [
-        { name: 'JavaScript', level: 90 },
-        { name: 'React', level: 85 },
-        { name: 'Node.js', level: 80 },
-        { name: 'Python', level: 85 },
-        { name: 'SQL', level: 70 },
-        { name: 'Git', level: 75 }
+        { 
+            name: 'JavaScript', 
+            level: 90,
+            details: {
+                experience: '4 years',
+                projects: 15,
+                specialties: ['ES6+', 'TypeScript', 'React', 'Node.js'],
+                recentWork: 'Built a real-time dashboard system'
+            }
+        },
+        { 
+            name: 'React', 
+            level: 85,
+            details: {
+                experience: '3 years',
+                projects: 12,
+                specialties: ['Redux', 'Hooks', 'Context API', 'Next.js'],
+                recentWork: 'Developed an e-commerce platform'
+            }
+        },
+        { 
+            name: 'Node.js', 
+            level: 82,
+            details: {
+                experience: '3 years',
+                projects: 10,
+                specialties: ['Express', 'REST APIs', 'MongoDB', 'WebSocket'],
+                recentWork: 'Created real-time chat application'
+            }
+        },
+        { 
+            name: 'Python', 
+            level: 78,
+            details: {
+                experience: '2 years',
+                projects: 8,
+                specialties: ['Django', 'Flask', 'Data Analysis', 'Automation'],
+                recentWork: 'Developed automation scripts for data processing'
+            }
+        }
     ];
 
     const skillsContainer = document.getElementById('skills-container');
@@ -331,7 +364,7 @@ function createSkillBars() {
         return;
     }
 
-    skillsContainer.innerHTML = ''; // Clear existing content
+    skillsContainer.innerHTML = '';
 
     function getSkillLevelDescription(level) {
         if (level >= 90) return 'Expert';
@@ -343,28 +376,93 @@ function createSkillBars() {
     skills.forEach(skill => {
         const skillBar = document.createElement('div');
         skillBar.className = 'skill-bar';
+        
+        // Main skill bar content
         skillBar.innerHTML = `
             <div class="skill-info">
-                <span class="skill-name">${skill.name}</span>
+                <span class="skill-name">> ${skill.name}</span>
                 <span class="skill-level-description">${getSkillLevelDescription(skill.level)}</span>
+                <span class="expand-btn" data-expanded="false">[+]</span>
             </div>
             <div class="skill-bar-container">
-                <div class="skill-level" data-level="${skill.level}" style="width: 0%"></div>
+                <div class="skill-level" data-level="${skill.level}" style="width: 0%">
+                    <div class="level-pulse"></div>
+                </div>
                 <div class="skill-percentage">0%</div>
             </div>
-            <div class="skill-label">Proficiency</div>
+            <div class="skill-details" style="display: none;">
+                <div class="skill-detail-content">
+                    <div class="detail-line">> Experience: ${skill.details.experience}</div>
+                    <div class="detail-line">> Projects: ${skill.details.projects}</div>
+                    <div class="detail-line">> Specialties:</div>
+                    <div class="detail-specialties">
+                        ${skill.details.specialties.map(s => `   - ${s}`).join('<br>')}
+                    </div>
+                    <div class="detail-line">> Recent Work:</div>
+                    <div class="detail-work">   ${skill.details.recentWork}</div>
+                </div>
+            </div>
         `;
+        
         skillsContainer.appendChild(skillBar);
+
+        // Handle expand/collapse
+        const expandBtn = skillBar.querySelector('.expand-btn');
+        const details = skillBar.querySelector('.skill-details');
+
+        expandBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            // Close any other open details
+            document.querySelectorAll('.skill-details').forEach(detail => {
+                if (detail !== details && detail.style.display === 'block') {
+                    detail.style.display = 'none';
+                    const btn = detail.parentElement.querySelector('.expand-btn');
+                    btn.textContent = '[+]';
+                    btn.dataset.expanded = 'false';
+                }
+            });
+
+            const isExpanded = expandBtn.dataset.expanded === 'true';
+            
+            if (!isExpanded) {
+                details.style.display = 'block';
+                expandBtn.textContent = '[-]';
+                expandBtn.dataset.expanded = 'true';
+                
+                // Add typing animation
+                details.querySelectorAll('.detail-line, .detail-specialties, .detail-work').forEach((line, index) => {
+                    const text = line.textContent;
+                    line.textContent = '';
+                    typeText(line, text, 20 * (index + 1));
+                });
+            } else {
+                details.style.display = 'none';
+                expandBtn.textContent = '[+]';
+                expandBtn.dataset.expanded = 'false';
+            }
+        });
     });
 
-    // Create a ScrollMagic scene for the skills section
+    // Close details when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.skill-bar')) {
+            document.querySelectorAll('.skill-details').forEach(detail => {
+                detail.style.display = 'none';
+                const btn = detail.parentElement.querySelector('.expand-btn');
+                btn.textContent = '[+]';
+                btn.dataset.expanded = 'false';
+            });
+        }
+    });
+
+    // Create ScrollMagic scene for skill bar animations
     new ScrollMagic.Scene({
         triggerElement: "#skills-container",
         triggerHook: 0.8,
         reverse: false
     })
     .on('enter', function() {
-        // Animate all skill bars and percentages when the section enters the viewport
         document.querySelectorAll('.skill-bar-container').forEach(container => {
             const skillLevel = container.querySelector('.skill-level');
             const skillPercentage = container.querySelector('.skill-percentage');
@@ -389,6 +487,18 @@ function createSkillBars() {
     skillBarsCreated = true;
 }
 
+// Helper function for typing animation
+function typeText(element, text, delay) {
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, 20);
+        }
+    }
+    setTimeout(type, delay);
+}
 
 
 function initializePortfolio() {

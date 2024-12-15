@@ -150,11 +150,11 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid #00ff00;
 
 }
-.skill-bar {
+/* .skill-bar {
     margin-bottom: 30px;
     color: #00ff00;
     font-family: 'Courier New', monospace;
-}
+} */
 
 .skill-info {
     display: flex;
@@ -534,21 +534,21 @@ footer {
    margin: 100px auto;
 }
 
-.skill-bar {
+/* .skill-bar {
     margin-bottom: 20px;
-}
+} */
 
 .skill-name {
     margin-bottom: 5px;
     color: #00ff00;
 }
 
-.skill-bar-container {
+/* .skill-bar-container {
     position: relative;
     background-color: #111;
     border: 1px solid #00ff00;
     height: 20px;
-}
+} */
 
 .skill-level {
     height: 100%;
@@ -774,4 +774,144 @@ body::after {
 /* For the CLI project links */
 .cli-project-link {
     cursor: pointer;
+}
+
+#skills-container {
+    position: relative;
+    z-index: 1;
+}
+
+.skill-bar {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #00ff00;
+    background: #000000;
+    transition: all 0.3s ease;
+}
+
+.skill-bar:hover {
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+    z-index: 3;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Center the skill level description */
+.skill-level-description {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #00ff00;
+}
+
+/* Adjust skill name size */
+.skill-name {
+    font-size: 14px;
+    color: #00ff00;
+}
+
+.expand-btn {
+    cursor: pointer;
+    color: #00ff00;
+    font-family: monospace;
+    padding: 2px 5px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.expand-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+.skill-bar-container {
+    height: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #00ff00;
+    position: relative;
+}
+
+.skill-level {
+    height: 100%;
+    background: #00ff00;
+    position: relative;
+    transition: width 1s ease-out;
+}
+
+.skill-percentage {
+    position: absolute;
+    right: -35px; /* Moved further right */
+    top: 0; /* Adjusted up */
+    color: #00ff00;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.skill-details {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #00ff00;
+    background-color: #000000;
+    color: #00ff00;
+    z-index: 2;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+    margin-top: 5px;
+    font-size: 13px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    display: none;
+}
+
+/* Smaller font for details */
+.detail-line, 
+.detail-specialties, 
+.detail-work {
+    position: relative;
+    z-index: 2;
+    background-color: #000000;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.detail-specialties {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+.detail-work {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+/* Add hover out behavior */
+.skill-bar:not(:hover) .skill-details {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.detail-specialties {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+.detail-work {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
 }
