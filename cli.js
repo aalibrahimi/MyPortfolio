@@ -1,9 +1,131 @@
-// CLI initialization and functionality
 const cli = {
     output: null,
     input: null,
     history: [],
     historyIndex: 0,
+    commands: ['help', 'about', 'skills', 'projects', 'contact', 'resume', 'clear'],
+    suggestions: [],
+    suggestionIndex: -1,
+    projectDetails: {
+        1: {
+            title: "E-commerce Platform",
+            overview: "• Full-stack application built with MERN stack\n• Features: user authentication, product catalog, shopping cart",
+            detailed: `
+<span class="cli-keyword">E-commerce Platform - Detailed Overview</span>
+
+<span class="cli-function">Technical Stack:</span>
+• Frontend: React.js, Redux, Material-UI
+• Backend: Node.js, Express.js
+• Database: MongoDB with Mongoose
+• Authentication: JWT, OAuth2.0
+• Payment: Stripe API Integration
+
+<span class="cli-function">Key Features:</span>
+• Advanced product search and filtering
+• Real-time inventory management
+• Multi-vendor support
+• Order tracking system
+• Admin dashboard
+• Analytics and reporting
+• Mobile-responsive design
+
+<span class="cli-function">Performance Metrics:</span>
+• 50,000+ monthly active users
+• 99.9% uptime
+• 2.5s average page load time
+• 95% customer satisfaction rate
+
+<span class="cli-function">Development Practices:</span>
+• Test-Driven Development with Jest
+• CI/CD pipeline with GitHub Actions
+• Microservices architecture
+• Docker containerization
+• AWS deployment with auto-scaling`
+        },
+        2: {
+            title: "Analytics Dashboard",
+            overview: "• Real-time data visualization using D3.js and React\n• Backend built with Node.js and WebSocket",
+            detailed: `
+<span class="cli-keyword">Analytics Dashboard - Detailed Overview</span>
+
+<span class="cli-function">Technical Stack:</span>
+• Frontend: React.js, D3.js, TailwindCSS
+• Backend: Node.js, Socket.io
+• Database: TimescaleDB
+• APIs: RESTful + WebSocket
+
+<span class="cli-function">Key Features:</span>
+• Real-time data updates
+• Custom chart builder
+• Data export capabilities
+• Role-based access control
+• Interactive data filtering
+• Customizable dashboards
+• Automated reporting
+
+<span class="cli-function">Implementation Details:</span>
+• Complex data aggregation
+• Time-series analysis
+• Custom D3.js visualizations
+• Responsive design system
+• Memory optimization`
+        },
+        3: {
+            title: "Task Management System",
+            overview: "• Built with Next.js and TypeScript\n• Real-time updates using Socket.io",
+            detailed: `
+<span class="cli-keyword">Task Management System - Detailed Overview</span>
+
+<span class="cli-function">Technical Stack:</span>
+• Frontend: Next.js, TypeScript, TailwindCSS
+• Backend: Node.js, Express
+• Database: PostgreSQL
+• Real-time: Socket.io
+• Authentication: NextAuth.js
+
+<span class="cli-function">Key Features:</span>
+• Kanban board view
+• Sprint planning tools
+• Time tracking
+• Team collaboration
+• File attachments
+• Custom workflows
+• Integration with GitHub
+
+<span class="cli-function">Advanced Capabilities:</span>
+• Automated task assignment
+• Priority management
+• Resource allocation
+• Progress tracking
+• Performance analytics`
+        },
+        4: {
+            title: "Portfolio CLI",
+            overview: "• Interactive command-line interface\n• Built with vanilla JavaScript",
+            detailed: `
+<span class="cli-keyword">Portfolio CLI - Detailed Overview</span>
+
+<span class="cli-function">Technical Stack:</span>
+• Vanilla JavaScript
+• HTML5/CSS3
+• Custom CLI Engine
+
+<span class="cli-function">Key Features:</span>
+• Command history
+• Auto-completion
+• Interactive UI
+• Custom event system
+• Responsive design
+• Accessibility support
+
+<span class="cli-function">Implementation Details:</span>
+• Custom command parser
+• Event-driven architecture
+• State management system
+• Error handling
+• Cross-browser compatibility`
+        }
+    },
 
     init: function() {
         this.output = document.getElementById('cli-output');
@@ -13,8 +135,20 @@ const cli = {
             return;
         }
         this.welcomeMessage();
-        this.input.addEventListener('keydown', this.handleInput.bind(this));
+        this.setupEventListeners();
         this.input.focus();
+    },
+
+    setupEventListeners: function() {
+        this.input.addEventListener('keydown', this.handleInput.bind(this));
+        this.input.addEventListener('input', this.handleAutocomplete.bind(this));
+        document.addEventListener('click', () => this.input.focus());
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                e.preventDefault();
+                this.copyToClipboard();
+            }
+        });
     },
 
     welcomeMessage: function() {
@@ -27,44 +161,111 @@ const cli = {
   <span class="cli-function">projects</span> : Show Ali's notable projects
   <span class="cli-function">contact</span>  : Display contact information
   <span class="cli-function">resume</span>   : View Ali's resume
-  <span class="cli-function">clear</span>    : Clear the console output</span>
-
-`;
+  <span class="cli-function">clear</span>    : Clear the console output</span>`;
         this.appendOutput(message);
     },
 
+    handleAutocomplete: function(e) {
+        const inputValue = this.input.value.toLowerCase();
+        this.suggestions = this.commands.filter(cmd => 
+            cmd.startsWith(inputValue) && cmd !== inputValue
+        );
+        
+        if (this.suggestions.length > 0) {
+            this.showSuggestions();
+        } else {
+            this.hideSuggestions();
+        }
+    },
+
+    showSuggestions: function() {
+        let suggestionsBox = document.getElementById('cli-suggestions');
+        if (!suggestionsBox) {
+            suggestionsBox = document.createElement('div');
+            suggestionsBox.id = 'cli-suggestions';
+            this.input.parentNode.appendChild(suggestionsBox);
+        }
+
+        suggestionsBox.innerHTML = this.suggestions
+            .map((cmd, index) => `<div class="suggestion-item${index === this.suggestionIndex ? ' selected' : ''}">${cmd}</div>`)
+            .join('');
+
+        suggestionsBox.style.display = 'block';
+    },
+
+    hideSuggestions: function() {
+        const suggestionsBox = document.getElementById('cli-suggestions');
+        if (suggestionsBox) {
+            suggestionsBox.style.display = 'none';
+            this.suggestionIndex = -1;
+        }
+    },
+
     handleInput: function(e) {
-        if (e.key === 'Enter') {
-            const command = this.input.value.trim();
-            if (command !== '') {
-                this.history.push(command);
-                this.historyIndex = this.history.length;
-                this.processCommand(command);
-            }
-            this.input.value = '';  // Clear the input field after processing
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (this.historyIndex > 0) {
-                this.historyIndex--;
-                this.input.value = this.history[this.historyIndex];
-            }
-        } else if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            if (this.historyIndex < this.history.length - 1) {
-                this.historyIndex++;
-                this.input.value = this.history[this.historyIndex];
-            } else {
-                this.historyIndex = this.history.length;
+        const suggestionsBox = document.getElementById('cli-suggestions');
+        
+        switch(e.key) {
+            case 'Tab':
+                e.preventDefault();
+                if (this.suggestions.length > 0) {
+                    this.input.value = this.suggestions[0];
+                    this.hideSuggestions();
+                }
+                break;
+
+            case 'ArrowUp':
+                e.preventDefault();
+                if (suggestionsBox && suggestionsBox.style.display === 'block') {
+                    this.suggestionIndex = Math.max(0, (this.suggestionIndex > 0 ? this.suggestionIndex : this.suggestions.length) - 1);
+                    this.showSuggestions();
+                } else if (this.historyIndex > 0) {
+                    this.historyIndex--;
+                    this.input.value = this.history[this.historyIndex];
+                }
+                break;
+
+            case 'ArrowDown':
+                e.preventDefault();
+                if (suggestionsBox && suggestionsBox.style.display === 'block') {
+                    this.suggestionIndex = Math.min(this.suggestions.length - 1, this.suggestionIndex + 1);
+                    this.showSuggestions();
+                } else if (this.historyIndex < this.history.length - 1) {
+                    this.historyIndex++;
+                    this.input.value = this.history[this.historyIndex];
+                } else {
+                    this.historyIndex = this.history.length;
+                    this.input.value = '';
+                }
+                break;
+
+            case 'Enter':
+                this.hideSuggestions();
+                const command = this.input.value.trim();
+                if (command !== '') {
+                    this.history.push(command);
+                    this.historyIndex = this.history.length;
+                    this.processCommand(command);
+                }
                 this.input.value = '';
-            }
+                break;
+
+            case 'Escape':
+                this.hideSuggestions();
+                break;
         }
     },
 
     processCommand: function(command) {
-        this.appendOutput(`<span class="cli-variable">ali@web-dev:~$ ${command}</span>`);
-        
         const [mainCommand, ...args] = command.toLowerCase().split(' ');
         
+        this.appendOutput(`<span class="cli-variable">ali@developer:~$ ${command}</span>`, true);
+        
+        // Check if the command is a number (for project details)
+        if (!isNaN(mainCommand) && mainCommand > 0 && mainCommand <= Object.keys(this.projectDetails).length) {
+            this.showProjectDetails(mainCommand);
+            return;
+        }
+
         switch(mainCommand) {
             case 'help':
                 this.showHelp();
@@ -105,77 +306,93 @@ const cli = {
   <span class="cli-function">projects</span> : Show Ali's notable projects
   <span class="cli-function">contact</span>  : Display contact information
   <span class="cli-function">resume</span>   : View Ali's resume
-  <span class="cli-function">clear</span>    : Clear the console output
-`;
+  <span class="cli-function">clear</span>    : Clear the console output`;
         this.appendOutput(helpText);
     },
 
     showAbout: function() {
         const aboutText = `
 <span class="cli-keyword">About Ali Alibrahimi:</span>
-Ali is a passionate Full-Stack Developer with a keen interest in building
-innovative web solutions. With a strong foundation in both front-end and
-back-end technologies, Ali strives to create seamless, user-friendly
-applications that solve real-world problems.
-`;
+I'm a passionate Full-Stack Developer with a strong foundation in modern web technologies.
+Focused on creating efficient, scalable, and user-friendly applications that solve real-world problems.
+Currently specializing in React.js, Node.js, and cloud technologies.`;
         this.appendOutput(aboutText);
     },
 
     showSkills: function() {
         const skillsText = `
 <span class="cli-keyword">Technical Skills:</span>
-• JavaScript (ES6+)   • React.js
-• Node.js             • Python
-• HTML5 & CSS3        • Git
-• RESTful APIs        • Database Management (SQL, MongoDB)
-• Responsive Design   • Test-Driven Development
-`;
+
+<span class="cli-function">Frontend:</span>
+  • React.js/Next.js
+  • JavaScript (ES6+)
+  • HTML5 & CSS3/Sass
+  • TypeScript
+  • Redux/Context API
+
+<span class="cli-function">Backend:</span>
+  • Node.js/Express
+  • Python/Django
+  • RESTful APIs
+  • GraphQL
+  • Firebase
+
+<span class="cli-function">Database:</span>
+  • MongoDB
+  • PostgreSQL
+  • MySQL
+  • Redis
+
+<span class="cli-function">DevOps & Tools:</span>
+  • Git/GitHub
+  • Docker
+  • AWS
+  • CI/CD
+  • Linux/Unix`;
         this.appendOutput(skillsText);
     },
 
     showProjects: function() {
         const projectsText = `
 <span class="cli-keyword">Notable Projects:</span>
-1. <span class="cli-function">E-commerce Platform</span>
-   - Full-stack application built with MERN stack
-   - Features: user authentication, product catalog, shopping cart, payment integration
+${Object.entries(this.projectDetails).map(([id, project]) => `
+${id}. <span class="cli-function cli-project-link" data-project="${id}">${project.title}</span>
+${project.overview}`).join('\n')}
 
-2. <span class="cli-function">Data Visualization Dashboard</span>
-   - Interactive dashboard using D3.js and React
-   - Real-time data updates and responsive design
-
-3. <span class="cli-function">AI-Powered Chat Application</span>
-   - Integrated OpenAI's GPT model for intelligent responses
-   - Built with Node.js backend and React frontend
-
-4. <span class="cli-function">Portfolio Website</span>
-   - You are currently interacting with it!
-   - Features this cool CLI interface
-`;
+<span class="cli-comment">Type the project number or click on a project name for detailed information</span>`;
         this.appendOutput(projectsText);
+        this.addProjectEventListeners();
     },
-    
+
+    showProjectDetails: function(projectId) {
+        const project = this.projectDetails[projectId];
+        if (project) {
+            this.appendOutput(project.detailed);
+        } else {
+            this.appendOutput(`<span class="cli-error">Project not found. Available projects: 1-${Object.keys(this.projectDetails).length}</span>`);
+        }
+    },
+
+    addProjectEventListeners: function() {
+        const projectLinks = this.output.querySelectorAll('.cli-project-link');
+        projectLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const projectId = e.target.getAttribute('data-project');
+                this.showProjectDetails(projectId);
+            });
+        });
+    },
+
     showContact: function() {
         const contactText = `
 <span class="cli-keyword">Contact Information:</span>
-• <span class="cli-link" data-action="email"><i class="fas fa-envelope"></i>Email: aalibrahimi0@gmail.com</span>
-• <span class="cli-link" data-action="linkedin"><i class="fab fa-linkedin"></i>LinkedIn: linkedin.com/in/aalibrahimi</span>
-• <span class="cli-link" data-action="github"><i class="fab fa-github"></i>GitHub: github.com/aalibrahimi</span>
+• <span class="cli-link" data-action="email"><i class="fas fa-envelope"></i> Email: aalibrahimi0@gmail.com</span>
+• <span class="cli-link" data-action="linkedin"><i class="fab fa-linkedin"></i> LinkedIn: linkedin.com/in/aalibrahimi</span>
+• <span class="cli-link" data-action="github"><i class="fab fa-github"></i> GitHub: github.com/aalibrahimi</span>
 
-<span class="cli-comment">Type 'contact [option]' or click on a link to interact</span>
-`;
+<span class="cli-comment">Type 'contact [option]' or click on a link to interact</span>`;
         this.appendOutput(contactText);
         this.addContactEventListeners();
-    },
-
-    addContactEventListeners: function() {
-        const links = this.output.querySelectorAll('.cli-link');
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const action = e.target.getAttribute('data-action');
-                this.handleContactInteraction(action);
-            });
-        });
     },
 
     handleContactInteraction: function(action) {
@@ -197,19 +414,38 @@ applications that solve real-world problems.
     showResume: function() {
         const resumeText = `
 <span class="cli-keyword">Resume:</span>
-Click the link below to view and download the resume:
-<a href="https://drive.google.com/file/d/1evH78ZjVRUTVZ62ZNSxMEt5XhPjDtBBD/view?usp=sharing" target="_blank">Download Resume (PDF)</a>
-`;
+Download my resume or view it online:
+<span class="cli-link" onclick="window.open('/resume.pdf', '_blank')">View/Download Resume (PDF)</span>`;
         this.appendOutput(resumeText);
     },
 
-    appendOutput: function(text) {
-        if (this.output) {
-            this.output.innerHTML += text + '<br>';
-            this.output.scrollTop = this.output.scrollHeight;
+    addContactEventListeners: function() {
+        const links = this.output.querySelectorAll('.cli-link');
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const action = e.target.getAttribute('data-action');
+                if (action) { this.handleContactInteraction(action);
+                }
+            });
+        });
+    },
 
-            // Add contact event listeners after the output is updated
+    copyToClipboard: function() {
+        const textToCopy = this.output.textContent;
+        navigator.clipboard.writeText(textToCopy).then(
+            () => this.appendOutput('<span class="cli-success">Output copied to clipboard!</span>'),
+            () => this.appendOutput('<span class="cli-error">Failed to copy output.</span>')
+        );
+    },
+
+    appendOutput: function(text, skipTimestamp = false) {
+        if (this.output) {
+            const timestamp = new Date().toLocaleTimeString();
+            const timestampHtml = skipTimestamp ? '' : `<span class="cli-timestamp">[${timestamp}]</span>`;
+            this.output.innerHTML += `${text}${timestampHtml}<br>`;
+            this.output.scrollTop = this.output.scrollHeight;
             this.addContactEventListeners();
+            this.addProjectEventListeners();
         } else {
             console.error('Output element not found');
         }

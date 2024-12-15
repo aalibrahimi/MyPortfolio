@@ -725,4 +725,53 @@ body::after {
 /* skills bar container */
 
 
-/*  */
+/* also for the Cli, suggestion/hover/selected/timestamp */
+#cli-suggestions {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    width: 200px;
+    z-index: 1000;
+}
+
+.suggestion-item {
+    padding: 5px 10px;
+    cursor: pointer;
+    color: #0f0;
+}
+
+.suggestion-item:hover,
+.suggestion-item.selected {
+    background: #333;
+}
+
+.cli-timestamp {
+    color: #666;
+    font-size: 0.8em;
+    margin-right: 8px;
+}
+
+/* Add these styles to your styles.css */
+.project {
+    cursor: pointer; /* Changes cursor to pointer on entire project div */
+}
+
+.project-link {
+    cursor: pointer; /* Ensures the links also show pointer cursor */
+}
+
+/* If you want to specifically target the clickable project titles */
+.project h3 {
+    cursor: pointer;
+}
+
+/* For the CLI project links */
+.cli-project-link {
+    cursor: pointer;
+}
