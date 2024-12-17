@@ -405,7 +405,7 @@ function createSkillBars() {
         skillBar.innerHTML = `
             <div class="skill-info">
                 <span class="skill-name">> ${skill.name}</span>
-                <span class="skill-level-description">${getSkillLevelDescription(skill.level)}</span>
+                <span class="skill-level-description" style="display: flex; justify-content: center;">${getSkillLevelDescription(skill.level)}</span>
                 <span class="expand-btn" data-expanded="false">[+]</span>
             </div>
             <div class="skill-bar-container">

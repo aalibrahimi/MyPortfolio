@@ -27,24 +27,30 @@
 /* Skill Info (Top Row) */
 .skill-info {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    position: relative;
 }
 
 .skill-name {
     font-size: 16px;
     font-weight: bold;
     color: #00ff00;
+    flex: 1;
 }
 
 .skill-level-description {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
     color: #00ff00;
     font-size: 14px;
     text-transform: uppercase;
+    text-align: center; /* Ensure it's visually centered */
 }
 
 .expand-btn {
+    flex: 1;
+    text-align: right;
     cursor: pointer;
     color: #00ff00;
     transition: all 0.3s ease;
