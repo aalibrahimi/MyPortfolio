@@ -1,0 +1,282 @@
+/* Section Base Styles */
+section {
+    margin-bottom: 5rem;
+    border: 1px solid #00ff00;
+    padding: 1rem;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+section:last-child {
+    margin-bottom: 0;
+}
+
+h1, h2, h3 {
+    color: #00ff00;
+    margin-bottom: 1rem;
+}
+
+/* About Section */
+#about {
+    border: 2px solid #00ff00;
+    padding: 1rem;
+    margin: 20px auto;
+    max-width: 950px;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+    line-height: 1.8;
+    text-align: justify;
+    text-shadow: 1px 1px 2px #000;
+    margin-bottom: 4%;
+}
+
+
+
+/* Projects Section */
+.project {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #001100;
+    border: 1px solid #00ff00;
+    cursor: pointer;
+}
+
+.project h3 {
+    cursor: pointer;
+}
+
+.project a {
+    color: beige;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.project a:hover {
+    color: #00ff00;
+    transform: scale(1.05);
+    text-shadow: 0 0 5px #00ff00;
+}
+
+/* Contact Section */
+#contact {
+    background-color: #000000;
+    border: 1px solid #00ff00;
+    padding: 30px 20px;
+    max-width: 950px;
+    margin: 0 auto 200px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+    margin-bottom: 2%;
+}
+
+#contact h2 {
+    margin-bottom: 25px;
+    font-size: 1.5em;
+    text-align: left;
+    padding-left: 5%;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#contact-form input,
+#contact-form textarea {
+    background-color: #001100;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+    width: 90%;
+    margin: 0 auto;
+    font-size: 1em;
+}
+
+#contact-form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+#contact-form button {
+    background-color: #001100;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    font-family: 'Courier New', monospace;
+    width: 90%;
+    margin: 20px auto 10px;
+    font-size: 1em;
+}
+
+#contact-form button:hover {
+    background-color: #002200;
+}
+
+#contact-form button:active {
+    transform: scale(0.98);
+}
+
+/* skill-bar section */
+.project {
+    cursor: pointer; /* Changes cursor to pointer on entire project div */
+}
+
+.project-link {
+    cursor: pointer; /* Ensures the links also show pointer cursor */
+}
+
+/* If you want to specifically target the clickable project titles */
+.project h3 {
+    cursor: pointer;
+}
+
+/* For the CLI project links */
+.cli-project-link {
+    cursor: pointer;
+}
+
+#skills-container {
+    position: relative;
+    z-index: 1;
+}
+
+.skill-bar {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #00ff00;
+    background: #000000;
+    transition: all 0.3s ease;
+}
+
+.skill-bar:hover {
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+    z-index: 3;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Center the skill level description */
+.skill-level-description {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #00ff00;
+}
+
+/* Adjust skill name size */
+.skill-name {
+    font-size: 14px;
+    color: #00ff00;
+}
+
+.expand-btn {
+    cursor: pointer;
+    color: #00ff00;
+    font-family: monospace;
+    padding: 2px 5px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.expand-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+.skill-bar-container {
+    height: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #00ff00;
+    position: relative;
+}
+
+.skill-level {
+    height: 100%;
+    background: #00ff00;
+    position: relative;
+    transition: width 1s ease-out;
+}
+
+.skill-percentage {
+    position: absolute;
+    right: -35px; /* Moved further right */
+    top: 0; /* Adjusted up */
+    color: #00ff00;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.skill-details {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #00ff00;
+    background-color: #000000;
+    color: #00ff00;
+    z-index: 2;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+    margin-top: 5px;
+    font-size: 13px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    display: none;
+}
+
+/* Smaller font for details */
+.detail-line, 
+.detail-specialties, 
+.detail-work {
+    position: relative;
+    z-index: 2;
+    background-color: #000000;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.detail-specialties {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+.detail-work {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+/* Add hover out behavior */
+.skill-bar:not(:hover) .skill-details {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.detail-specialties {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+.detail-work {
+    margin-left: 20px;
+    color: #00cc00;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}

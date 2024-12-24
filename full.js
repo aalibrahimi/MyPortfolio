@@ -323,7 +323,7 @@ function createSkillBars() {
                 experience: '4 years',
                 projects: 15,
                 specialties: ['ES6+', 'TypeScript', 'React', 'Node.js'],
-                recentWork: 'Built a real-time dashboard system'
+                recentWork: 'Built a real-time dashboard system with optimized performance and modular architecture.'
             }
         },
         { 
@@ -333,7 +333,7 @@ function createSkillBars() {
                 experience: '3 years',
                 projects: 12,
                 specialties: ['Redux', 'Hooks', 'Context API', 'Next.js'],
-                recentWork: 'Developed an e-commerce platform'
+                recentWork: 'Developed an e-commerce platform featuring dynamic components and smooth user experiences.'
             }
         },
         { 
@@ -343,20 +343,44 @@ function createSkillBars() {
                 experience: '3 years',
                 projects: 10,
                 specialties: ['Express', 'REST APIs', 'MongoDB', 'WebSocket'],
-                recentWork: 'Created real-time chat application'
+                recentWork: 'Created a real-time chat application with RESTful APIs and socket-based communication.'
             }
         },
         { 
             name: 'Python', 
             level: 78,
             details: {
-                experience: '2 years',
-                projects: 8,
+                experience: '5 years',
+                projects: 30,
                 specialties: ['Django', 'Flask', 'Data Analysis', 'Automation'],
-                recentWork: 'Developed automation scripts for data processing'
+                recentWork: 'Developed automation scripts to process large datasets and generate analytical reports.'
+            }
+        },
+        
+        { 
+            name: 'Git & GitHub', 
+            level: 88,
+            details: {
+                experience: '5 years',
+                projects: 50,
+                specialties: ['Version Control', 'Branch Management', 'CI/CD Workflows', 'Code Reviews'],
+                recentWork: 'Configured CI/CD pipelines for seamless deployment in collaborative projects.'
+            }
+        },
+        { 
+            name: 'SQL & Databases', 
+            level: 80,
+            details: {
+                experience: '3 years',
+                projects: 10,
+                specialties: ['MySQL', 'PostgreSQL', 'ORMs (Sequelize, SQLAlchemy)', 'Query Optimization'],
+                recentWork: 'Designed and optimized database schemas for scalable web applications.'
             }
         }
+        
+  
     ];
+    
 
     const skillsContainer = document.getElementById('skills-container');
     if (!skillsContainer) {
@@ -381,7 +405,7 @@ function createSkillBars() {
         skillBar.innerHTML = `
             <div class="skill-info">
                 <span class="skill-name">> ${skill.name}</span>
-                <span class="skill-level-description">${getSkillLevelDescription(skill.level)}</span>
+                <span class="skill-level-description" style="display: flex; justify-content: center;">${getSkillLevelDescription(skill.level)}</span>
                 <span class="expand-btn" data-expanded="false">[+]</span>
             </div>
             <div class="skill-bar-container">
