@@ -34,7 +34,7 @@ function enableScroll(){
 }
 
 const bootText = [
-    "AliOS BIOS Version 10.2024",
+    "AliOS BIOS Version 10.2025",
     "CPU: AliTech Core - Optimized for Front-End Development",
     "Memory Test: 6 Years of Software Development Experience",
     "Hard Disk: 80 MB - Loaded with Creative Projects",
